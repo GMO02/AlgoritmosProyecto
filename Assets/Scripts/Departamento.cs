@@ -12,6 +12,8 @@ public class Departamento : MonoBehaviour
 
     public AudioClip clickSound; // Sonido para cuando se haga clic en el departamento
 
+    public List<Tropa> Tropas = new List<Tropa>(); // Lista de tropas en el departamento
+
     private Color originalColor; // Color original del departamento
     private AudioSource audioSource; // Componente de AudioSource para reproducir el sonido
 
@@ -46,6 +48,8 @@ public class Departamento : MonoBehaviour
 
         // Guardar el color original del departamento
         originalColor = spriteRenderer.color;
+
+        Tropas = new List<Tropa>(); // Inicializar la lista de tropas
     }
 
     // Método para manejar el clic sobre el departamento
