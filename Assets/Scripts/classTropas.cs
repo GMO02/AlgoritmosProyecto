@@ -45,3 +45,5 @@ public class Caballeria : Tropa
 
     public override string Tipo => "Caballería";
 }
+
+
