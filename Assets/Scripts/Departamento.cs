@@ -26,6 +26,33 @@ public class Departamento : MonoBehaviour
     public bool TieneOficinaArtilleria = false;
     public bool TieneOficinaCaballeria = false;
 
+    // === PROPIEDADES Y FUNCIONES PARA EDIFICIOS ===
+    public int ReclutasPendientes { get; set; } = 0;
+    public float ModificadorCostoCaballeria { get; set; } = 1f;
+    public int EquipamientoProducido { get; set; } = 0;
+
+    public void AñadirReclutasPendientes(int cantidad)
+    {
+        ReclutasPendientes += cantidad;
+    }
+
+    public void EstablecerModificadorCostoCaballeria(float modificador)
+    {
+        ModificadorCostoCaballeria = modificador;
+    }
+
+    public void AñadirEquipamientoProducido(int cantidad)
+    {
+        EquipamientoProducido += cantidad;
+    }
+
+    public void ReiniciarValoresEdificio()
+    {
+        ReclutasPendientes = 0;
+        ModificadorCostoCaballeria = 1f;
+        EquipamientoProducido = 0;
+    }
+
     private Color originalColor;
     private Color seleccionadoColor = new Color(0.643f, 0.631f, 0.565f);
     private Color jugador1Color = new Color(0.720f, 0.827f, 0.702f); // Color #B8D3B3 (RGB Normalizado)
