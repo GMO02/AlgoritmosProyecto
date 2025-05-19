@@ -9,11 +9,15 @@ public class Departamento : MonoBehaviour
     public SpriteRenderer spriteRenderer;
     public List<Departamento> Adyacentes;
 
+
+    [SerializeField] private Jugador jugador1;  // Jugador 1, ahora visible en el Inspector
+    [SerializeField] private Jugador jugador2;
+
     public AudioClip clickSound;
     private AudioSource audioSource;
 
     private static Departamento departamentoSeleccionado = null;
-
+    
     public Jugador Dueño;
     public List<Tropa> Tropas = new List<Tropa>();
 
@@ -24,17 +28,25 @@ public class Departamento : MonoBehaviour
 
     private Color originalColor;
     private Color seleccionadoColor = new Color(0.643f, 0.631f, 0.565f);
+    private Color jugador1Color = new Color(0.720f, 0.827f, 0.702f); // Color #B8D3B3 (RGB Normalizado)
+    private Color jugador2Color = new Color(0.720f, 0.325f, 0.376f); // Color #B85360 (RGB Normalizado)
 
     void Start()
     {
         if (spriteRenderer == null)
+        {
             spriteRenderer = GetComponent<SpriteRenderer>();
+        }
 
         audioSource = GetComponent<AudioSource>();
         if (audioSource == null)
+        {
             audioSource = gameObject.AddComponent<AudioSource>();
+        }
 
         originalColor = spriteRenderer.color;
+
+        Tropas = new List<Tropa>(); // Inicializar la lista de tropas
     }
 
     void OnMouseDown()
@@ -49,7 +61,9 @@ public class Departamento : MonoBehaviour
             SeleccionarDepartamento();
 
             if (audioSource != null && clickSound != null)
+            {
                 audioSource.PlayOneShot(clickSound);
+            }
 
             MostrarDatos();
         }
@@ -71,8 +85,27 @@ public class Departamento : MonoBehaviour
         departamentoSeleccionado = null;
     }
 
+    void SpriteJugador1()
+    {
+        spriteRenderer.color = jugador1Color;
+    }
+
+    void SpriteJugador2()
+    {
+        spriteRenderer.color = jugador2Color;
+    }
+
     void Update()
     {
+        if (jugador1.Controla(this))
+        {
+            SpriteJugador1();
+        }
+        else
+        {
+            SpriteJugador2();
+        }
+
         if (Input.GetMouseButtonDown(0))
         {
             RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);

@@ -10,6 +10,9 @@ public abstract class Tropa
         Dueño = dueño;
     }
 
+    public void SetVida(int i) {
+        Vida = i;
+    }
     public abstract string Tipo { get; }  // Para identificar el tipo en la UI
 }
 public class Infanteria : Tropa

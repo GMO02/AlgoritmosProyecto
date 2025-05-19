@@ -1,6 +1,7 @@
 using System.Collections.Generic;
+using UnityEngine;
 
-public class Jugador
+public class Jugador:MonoBehaviour
 {
     public string Nombre { get; private set; }
     public List<Departamento> Departamentos { get; private set; }
