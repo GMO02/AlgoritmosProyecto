@@ -13,6 +13,10 @@ public class MapaControlador : MonoBehaviour
     // Conexiones entre departamentos (usando el nombre como clave)
     private Dictionary<string, List<string>> conexiones;
 
+    public Dictionary<string, Departamento> ObtenerDepartamentos()
+    {
+        return departamentos;
+    }
 
     // Start is called before the first frame update
     void Start()

@@ -1,27 +1,154 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI; // Para mostrar datos si usas UI
 
 public class Departamento : MonoBehaviour
 {
     public string Nombre;
-    public SpriteRenderer spriteRenderer;  // Referencia al SpriteRenderer que representa el departamento
-
-    // Lista de departamentos adyacentes (territorios a los que puede atacar)
+    public SpriteRenderer spriteRenderer;
     public List<Departamento> Adyacentes;
 
-    public AudioClip clickSound; // Sonido para cuando se haga clic en el departamento
+    public AudioClip clickSound;
+    private AudioSource audioSource;
 
-    public List<Tropa> Tropas = new List<Tropa>(); // Lista de tropas en el departamento
+    private static Departamento departamentoSeleccionado = null;
 
-    private Color originalColor; // Color original del departamento
-    private AudioSource audioSource; // Componente de AudioSource para reproducir el sonido
+    public Jugador Dueño;
+    public List<Tropa> Tropas = new List<Tropa>();
 
-    private static Departamento departamentoSeleccionado = null;  // Mantener solo un departamento seleccionado
+    // Edificios
+    public bool TieneOficinaInfanteria = false;
+    public bool TieneOficinaArtilleria = false;
+    public bool TieneOficinaCaballeria = false;
 
-    private Color seleccionadoColor = new Color(0.643f, 0.631f, 0.565f); // Color #A4A190 (RGB Normalizado)
+    private Color originalColor;
+    private Color seleccionadoColor = new Color(0.643f, 0.631f, 0.565f);
 
-    // Método para agregar un departamento adyacente
+    void Start()
+    {
+        if (spriteRenderer == null)
+            spriteRenderer = GetComponent<SpriteRenderer>();
+
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+            audioSource = gameObject.AddComponent<AudioSource>();
+
+        originalColor = spriteRenderer.color;
+    }
+
+    void OnMouseDown()
+    {
+        if (departamentoSeleccionado != null && departamentoSeleccionado != this)
+        {
+            departamentoSeleccionado.DesmarcarDepartamento();
+        }
+
+        if (departamentoSeleccionado != this)
+        {
+            SeleccionarDepartamento();
+
+            if (audioSource != null && clickSound != null)
+                audioSource.PlayOneShot(clickSound);
+
+            MostrarDatos();
+        }
+        else
+        {
+            DesmarcarDepartamento();
+        }
+    }
+
+    private void SeleccionarDepartamento()
+    {
+        spriteRenderer.color = seleccionadoColor;
+        departamentoSeleccionado = this;
+    }
+
+    private void DesmarcarDepartamento()
+    {
+        spriteRenderer.color = originalColor;
+        departamentoSeleccionado = null;
+    }
+
+    void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+            if (hit.collider == null && departamentoSeleccionado != null)
+            {
+                departamentoSeleccionado.DesmarcarDepartamento();
+                departamentoSeleccionado = null;
+            }
+        }
+    }
+
+    public void MostrarDatos()
+    {
+        Debug.Log("Departamento: " + Nombre);
+        Debug.Log("Dueño: " + (Dueño != null ? Dueño.Nombre : "Sin dueño"));
+        Debug.Log("Tropas: " + Tropas.Count);
+        Debug.Log("Infantería: " + Tropas.FindAll(t => t is Infanteria).Count);
+        Debug.Log("Artillería: " + Tropas.FindAll(t => t is Artilleria).Count);
+        Debug.Log("Caballería: " + Tropas.FindAll(t => t is Caballeria).Count);
+        Debug.Log("Oficinas: " +
+            (TieneOficinaInfanteria ? "Infantería " : "") +
+            (TieneOficinaArtilleria ? "Artillería " : "") +
+            (TieneOficinaCaballeria ? "Caballería " : ""));
+    }
+
+    public void ConstruirOficina(string tipo)
+    {
+        // Aquí podrías verificar si el jugador tiene recursos
+        switch (tipo.ToLower())
+        {
+            case "infanteria":
+                TieneOficinaInfanteria = true;
+                break;
+            case "artilleria":
+                TieneOficinaArtilleria = true;
+                break;
+            case "caballeria":
+                TieneOficinaCaballeria = true;
+                break;
+        }
+
+        Debug.Log($"Oficina de {tipo} construida en {Nombre}");
+    }
+
+    public void ReclutarTropa(string tipo)
+    {
+        switch (tipo.ToLower())
+        {
+            case "infanteria":
+                if (TieneOficinaInfanteria)
+                    Tropas.Add(new Infanteria(Dueño));
+                break;
+            case "artilleria":
+                if (TieneOficinaArtilleria)
+                    Tropas.Add(new Artilleria(Dueño));
+                break;
+            case "caballeria":
+                if (TieneOficinaCaballeria)
+                    Tropas.Add(new Caballeria(Dueño));
+                break;
+        }
+    }
+
+    public void Conquistar(Jugador nuevoDueño)
+    {
+        if (Dueño != null)
+        {
+            Dueño.RemoverDepartamento(this);
+        }
+
+        AsignarPropietario(nuevoDueño);
+        Tropas.Clear();
+        Debug.Log($"{Nombre} fue conquistado por {nuevoDueño.Nombre}");
+    }
+
+
     public void AgregarAdyacente(Departamento adyacente)
     {
         if (!Adyacentes.Contains(adyacente))
@@ -30,89 +157,14 @@ public class Departamento : MonoBehaviour
         }
     }
 
-
-    void Start()
+    public void AsignarPropietario(Jugador nuevoPropietario)
     {
-        // Asegúrate de que el spriteRenderer esté inicializado correctamente si se necesita
-        if (spriteRenderer == null)
-        {
-            spriteRenderer = GetComponent<SpriteRenderer>();
-        }
-
-        // Asegúrate de que el AudioSource esté asignado
-        audioSource = GetComponent<AudioSource>();
-        if (audioSource == null)
-        {
-            audioSource = gameObject.AddComponent<AudioSource>();  // Añadir un componente AudioSource si no existe
-        }
-
-        // Guardar el color original del departamento
-        originalColor = spriteRenderer.color;
-
-        Tropas = new List<Tropa>(); // Inicializar la lista de tropas
+        Dueño = nuevoPropietario;
+        nuevoPropietario.AñadirDepartamento(this);
     }
-
-    // Método para manejar el clic sobre el departamento
-    void OnMouseDown()
+    public void RemoverPropietario(Jugador antiguoPropietario)
     {
-        // Si ya hay un departamento seleccionado, desmarcarlo
-        if (departamentoSeleccionado != null && departamentoSeleccionado != this)
-        {
-            departamentoSeleccionado.DesmarcarDepartamento();  // Desmarcar el departamento previamente seleccionado
-        }
-
-        // Si el departamento actual no está seleccionado, marcarlo como seleccionado
-        if (departamentoSeleccionado != this)
-        {
-            SeleccionarDepartamento();
-
-            // Reproducir el sonido solo cuando el departamento es seleccionado
-            if (audioSource != null && clickSound != null)
-            {
-                audioSource.PlayOneShot(clickSound);  // Reproducir el sonido de clic
-            }
-        }
-        else
-        {
-            // Si el departamento ya está seleccionado, desmarcarlo
-            DesmarcarDepartamento();
-        }
-    }
-
-    // Método para seleccionar un departamento
-    private void SeleccionarDepartamento()
-    {
-        // Cambiar el color a #A4A190 (más oscuro)
-        spriteRenderer.color = seleccionadoColor;
-
-        // Marcar este departamento como seleccionado
-        departamentoSeleccionado = this;
-    }
-
-    // Método para desmarcar este departamento
-    private void DesmarcarDepartamento()
-    {
-        // Restaurar el color original del departamento desmarcado
-        spriteRenderer.color = originalColor;
-
-        // Desmarcar el departamento
-        departamentoSeleccionado = null;
-    }
-
-    // Detectar si el clic es fuera del mapa (fondo)
-    void Update()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            // Hacer un Raycast en la escena
-            RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
-
-            // Si no se ha tocado ningún departamento, desmarcar
-            if (hit.collider == null && departamentoSeleccionado != null)
-            {
-                departamentoSeleccionado.DesmarcarDepartamento();
-                departamentoSeleccionado = null;  // Resetear la selección
-            }
-        }
+        Dueño = null;
+        antiguoPropietario.RemoverDepartamento(this);
     }
 }
