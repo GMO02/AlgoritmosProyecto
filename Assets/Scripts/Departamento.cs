@@ -9,7 +9,7 @@ public class Departamento : MonoBehaviour
     public SpriteRenderer spriteRenderer;
     public List<Departamento> Adyacentes;
 
-
+    public List<Edificio> Edificios = new List<Edificio>();
     [SerializeField] private Jugador jugador1;  // Jugador 1, ahora visible en el Inspector
     [SerializeField] private Jugador jugador2;
 
@@ -18,7 +18,7 @@ public class Departamento : MonoBehaviour
 
     private static Departamento departamentoSeleccionado = null;
     
-    public Jugador Dueño;
+    public Jugador Dueï¿½o;
     public List<Tropa> Tropas = new List<Tropa>();
 
     // Edificios
@@ -31,7 +31,7 @@ public class Departamento : MonoBehaviour
     public float ModificadorCostoCaballeria { get; set; } = 1f;
     public int EquipamientoProducido { get; set; } = 0;
 
-    public void AñadirReclutasPendientes(int cantidad)
+    public void Aï¿½adirReclutasPendientes(int cantidad)
     {
         ReclutasPendientes += cantidad;
     }
@@ -41,7 +41,7 @@ public class Departamento : MonoBehaviour
         ModificadorCostoCaballeria = modificador;
     }
 
-    public void AñadirEquipamientoProducido(int cantidad)
+    public void Aï¿½adirEquipamientoProducido(int cantidad)
     {
         EquipamientoProducido += cantidad;
     }
@@ -147,20 +147,20 @@ public class Departamento : MonoBehaviour
     public void MostrarDatos()
     {
         Debug.Log("Departamento: " + Nombre);
-        Debug.Log("Dueño: " + (Dueño != null ? Dueño.Nombre : "Sin dueño"));
+        Debug.Log("Dueï¿½o: " + (Dueï¿½o != null ? Dueï¿½o.Nombre : "Sin dueï¿½o"));
         Debug.Log("Tropas: " + Tropas.Count);
-        Debug.Log("Infantería: " + Tropas.FindAll(t => t is Infanteria).Count);
-        Debug.Log("Artillería: " + Tropas.FindAll(t => t is Artilleria).Count);
-        Debug.Log("Caballería: " + Tropas.FindAll(t => t is Caballeria).Count);
+        Debug.Log("Infanterï¿½a: " + Tropas.FindAll(t => t is Infanteria).Count);
+        Debug.Log("Artillerï¿½a: " + Tropas.FindAll(t => t is Artilleria).Count);
+        Debug.Log("Caballerï¿½a: " + Tropas.FindAll(t => t is Caballeria).Count);
         Debug.Log("Oficinas: " +
-            (TieneOficinaInfanteria ? "Infantería " : "") +
-            (TieneOficinaArtilleria ? "Artillería " : "") +
-            (TieneOficinaCaballeria ? "Caballería " : ""));
+            (TieneOficinaInfanteria ? "Infanterï¿½a " : "") +
+            (TieneOficinaArtilleria ? "Artillerï¿½a " : "") +
+            (TieneOficinaCaballeria ? "Caballerï¿½a " : ""));
     }
 
     public void ConstruirOficina(string tipo)
     {
-        // Aquí podrías verificar si el jugador tiene recursos
+        // Aquï¿½ podrï¿½as verificar si el jugador tiene recursos
         switch (tipo.ToLower())
         {
             case "infanteria":
@@ -183,29 +183,29 @@ public class Departamento : MonoBehaviour
         {
             case "infanteria":
                 if (TieneOficinaInfanteria)
-                    Tropas.Add(new Infanteria(Dueño));
+                    Tropas.Add(new Infanteria(Dueï¿½o));
                 break;
             case "artilleria":
                 if (TieneOficinaArtilleria)
-                    Tropas.Add(new Artilleria(Dueño));
+                    Tropas.Add(new Artilleria(Dueï¿½o));
                 break;
             case "caballeria":
                 if (TieneOficinaCaballeria)
-                    Tropas.Add(new Caballeria(Dueño));
+                    Tropas.Add(new Caballeria(Dueï¿½o));
                 break;
         }
     }
 
-    public void Conquistar(Jugador nuevoDueño)
+    public void Conquistar(Jugador nuevoDueï¿½o)
     {
-        if (Dueño != null)
+        if (Dueï¿½o != null)
         {
-            Dueño.RemoverDepartamento(this);
+            Dueï¿½o.RemoverDepartamento(this);
         }
 
-        AsignarPropietario(nuevoDueño);
+        AsignarPropietario(nuevoDueï¿½o);
         Tropas.Clear();
-        Debug.Log($"{Nombre} fue conquistado por {nuevoDueño.Nombre}");
+        Debug.Log($"{Nombre} fue conquistado por {nuevoDueï¿½o.Nombre}");
     }
 
 
@@ -219,12 +219,12 @@ public class Departamento : MonoBehaviour
 
     public void AsignarPropietario(Jugador nuevoPropietario)
     {
-        Dueño = nuevoPropietario;
-        nuevoPropietario.AñadirDepartamento(this);
+        Dueï¿½o = nuevoPropietario;
+        nuevoPropietario.Aï¿½adirDepartamento(this);
     }
     public void RemoverPropietario(Jugador antiguoPropietario)
     {
-        Dueño = null;
+        Dueï¿½o = null;
         antiguoPropietario.RemoverDepartamento(this);
     }
 }
