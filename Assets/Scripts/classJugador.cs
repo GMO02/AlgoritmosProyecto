@@ -12,7 +12,7 @@ public class Jugador:MonoBehaviour
         Departamentos = new List<Departamento>();
     }
 
-    public void AñadirDepartamento(Departamento dpto)
+    public void AnadirDepartamento(Departamento dpto)
     {
         if (!Departamentos.Contains(dpto))
         {
