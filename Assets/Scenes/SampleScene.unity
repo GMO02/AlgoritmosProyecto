@@ -1169,10 +1169,41 @@ MonoBehaviour:
   jugador1: {fileID: 0}
   jugador2: {fileID: 0}
   clickSound: {fileID: 8300000, guid: 5d318a6ca4e19b14391d1ec70f9af557, type: 3}
-  "Due\xF1o": {fileID: 0}
+  Dueno: {fileID: 0}
   TieneOficinaInfanteria: 0
   TieneOficinaArtilleria: 0
   TieneOficinaCaballeria: 0
+--- !u!1 &229656774
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 229656775}
+  m_Layer: 0
+  m_Name: Jugador1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &229656775
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 229656774}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 349.5989, y: 180.48021, z: -0.8922712}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &253221297
 GameObject:
   m_ObjectHideFlags: 0
@@ -1817,7 +1848,7 @@ MonoBehaviour:
   jugador1: {fileID: 0}
   jugador2: {fileID: 0}
   clickSound: {fileID: 8300000, guid: 5d318a6ca4e19b14391d1ec70f9af557, type: 3}
-  "Due\xF1o": {fileID: 0}
+  Dueno: {fileID: 0}
   TieneOficinaInfanteria: 0
   TieneOficinaArtilleria: 0
   TieneOficinaCaballeria: 0
@@ -2531,7 +2562,7 @@ MonoBehaviour:
   jugador1: {fileID: 0}
   jugador2: {fileID: 0}
   clickSound: {fileID: 8300000, guid: 5d318a6ca4e19b14391d1ec70f9af557, type: 3}
-  "Due\xF1o": {fileID: 0}
+  Dueno: {fileID: 0}
   TieneOficinaInfanteria: 0
   TieneOficinaArtilleria: 0
   TieneOficinaCaballeria: 0
@@ -3643,7 +3674,7 @@ MonoBehaviour:
   jugador1: {fileID: 0}
   jugador2: {fileID: 0}
   clickSound: {fileID: 8300000, guid: 5d318a6ca4e19b14391d1ec70f9af557, type: 3}
-  "Due\xF1o": {fileID: 0}
+  Dueno: {fileID: 0}
   TieneOficinaInfanteria: 0
   TieneOficinaArtilleria: 0
   TieneOficinaCaballeria: 0
@@ -4179,7 +4210,7 @@ MonoBehaviour:
   jugador1: {fileID: 0}
   jugador2: {fileID: 0}
   clickSound: {fileID: 8300000, guid: 5d318a6ca4e19b14391d1ec70f9af557, type: 3}
-  "Due\xF1o": {fileID: 0}
+  Dueno: {fileID: 0}
   TieneOficinaInfanteria: 0
   TieneOficinaArtilleria: 0
   TieneOficinaCaballeria: 0
@@ -6367,7 +6398,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.6968622}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.000030517578, y: -6.207405}
+  m_AnchoredPosition: {x: 0.000030517578, y: -6.2073975}
   m_SizeDelta: {x: 0.000061035, y: 11.4483}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1021974666
@@ -8758,7 +8789,7 @@ MonoBehaviour:
   jugador1: {fileID: 0}
   jugador2: {fileID: 0}
   clickSound: {fileID: 8300000, guid: 5d318a6ca4e19b14391d1ec70f9af557, type: 3}
-  "Due\xF1o": {fileID: 0}
+  Dueno: {fileID: 0}
   TieneOficinaInfanteria: 0
   TieneOficinaArtilleria: 0
   TieneOficinaCaballeria: 0
@@ -9402,7 +9433,7 @@ MonoBehaviour:
   jugador1: {fileID: 0}
   jugador2: {fileID: 0}
   clickSound: {fileID: 8300000, guid: 5d318a6ca4e19b14391d1ec70f9af557, type: 3}
-  "Due\xF1o": {fileID: 0}
+  Dueno: {fileID: 0}
   TieneOficinaInfanteria: 0
   TieneOficinaArtilleria: 0
   TieneOficinaCaballeria: 0
@@ -10154,7 +10185,7 @@ MonoBehaviour:
   jugador1: {fileID: 0}
   jugador2: {fileID: 0}
   clickSound: {fileID: 8300000, guid: 5d318a6ca4e19b14391d1ec70f9af557, type: 3}
-  "Due\xF1o": {fileID: 0}
+  Dueno: {fileID: 0}
   TieneOficinaInfanteria: 0
   TieneOficinaArtilleria: 0
   TieneOficinaCaballeria: 0
@@ -10388,7 +10419,7 @@ MonoBehaviour:
   jugador1: {fileID: 0}
   jugador2: {fileID: 0}
   clickSound: {fileID: 8300000, guid: 5d318a6ca4e19b14391d1ec70f9af557, type: 3}
-  "Due\xF1o": {fileID: 0}
+  Dueno: {fileID: 0}
   TieneOficinaInfanteria: 0
   TieneOficinaArtilleria: 0
   TieneOficinaCaballeria: 0
@@ -10674,7 +10705,7 @@ MonoBehaviour:
   jugador1: {fileID: 0}
   jugador2: {fileID: 0}
   clickSound: {fileID: 8300000, guid: 5d318a6ca4e19b14391d1ec70f9af557, type: 3}
-  "Due\xF1o": {fileID: 0}
+  Dueno: {fileID: 0}
   TieneOficinaInfanteria: 0
   TieneOficinaArtilleria: 0
   TieneOficinaCaballeria: 0
@@ -11552,7 +11583,7 @@ MonoBehaviour:
   jugador1: {fileID: 0}
   jugador2: {fileID: 0}
   clickSound: {fileID: 8300000, guid: 5d318a6ca4e19b14391d1ec70f9af557, type: 3}
-  "Due\xF1o": {fileID: 0}
+  Dueno: {fileID: 0}
   TieneOficinaInfanteria: 0
   TieneOficinaArtilleria: 0
   TieneOficinaCaballeria: 0
@@ -12163,7 +12194,7 @@ MonoBehaviour:
   jugador1: {fileID: 0}
   jugador2: {fileID: 0}
   clickSound: {fileID: 8300000, guid: 5d318a6ca4e19b14391d1ec70f9af557, type: 3}
-  "Due\xF1o": {fileID: 0}
+  Dueno: {fileID: 0}
   TieneOficinaInfanteria: 0
   TieneOficinaArtilleria: 0
   TieneOficinaCaballeria: 0
@@ -14202,7 +14233,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.6968622}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.000030517578, y: -6.207405}
+  m_AnchoredPosition: {x: 0.000030517578, y: -6.2073975}
   m_SizeDelta: {x: 0.000061035, y: 11.4483}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2088142285
@@ -14627,3 +14658,4 @@ SceneRoots:
   - {fileID: 2002903326}
   - {fileID: 1479974412}
   - {fileID: 372795213}
+  - {fileID: 229656775}

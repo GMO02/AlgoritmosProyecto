@@ -47,7 +47,7 @@ public class SistemaDeTurnos : MonoBehaviour
         foreach (var depto in todos.Values)
         {
             Jugador jugadorAsignado = jugadores[i % jugadores.Count];
-            jugadorAsignado.AñadirDepartamento(depto);
+            jugadorAsignado.AnadirDepartamento(depto);
             depto.AsignarPropietario(jugadorAsignado); // Este método debe existir en tu clase Departamento
             i++;
         }
