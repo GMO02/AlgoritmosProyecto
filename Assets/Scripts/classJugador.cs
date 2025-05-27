@@ -4,12 +4,19 @@ using UnityEngine;
 public class Jugador:MonoBehaviour
 {
     public string Nombre { get; private set; }
+    public int ID;
     public List<Departamento> Departamentos { get; private set; }
 
-    public Jugador(string nombre)
+    public Jugador(string nombre, int iD)
     {
         Nombre = nombre;
         Departamentos = new List<Departamento>();
+        ID = iD;
+    }
+
+    public int getID()
+    {
+        return ID;
     }
 
     public void AnadirDepartamento(Departamento dpto)

@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI; // Para mostrar datos si usas UI
+using UnityEngine.UI;
 
 public class Departamento : MonoBehaviour
 {
@@ -10,21 +10,19 @@ public class Departamento : MonoBehaviour
     public List<Departamento> Adyacentes;
 
     public List<Edificios> Edificios = new List<Edificios>();
-    [SerializeField] private Jugador jugador1;  // Jugador 1, ahora visible en el Inspector
-    [SerializeField] private Jugador jugador2;
+    public List<Tropa> Tropas = new List<Tropa>();
+
+    public Jugador Dueno;
 
     public AudioClip clickSound;
     private AudioSource audioSource;
 
-    private static Departamento departamentoSeleccionado = null;
-    
-    public Jugador Dueno;
-    public List<Tropa> Tropas = new List<Tropa>();
+    private static Departamento departamentoSeleccionado = null;   
 
     // Edificios
-    public bool TieneOficinaInfanteria = false;
-    public bool TieneOficinaArtilleria = false;
-    public bool TieneOficinaCaballeria = false;
+    public bool TieneOficinaReclutamiento = false;
+    public bool TieneFabrica = false;
+    public bool TieneEstablo = false;
 
     // === PROPIEDADES Y FUNCIONES PARA EDIFICIOS ===
     public int ReclutasPendientes { get; set; } = 0;
@@ -124,11 +122,11 @@ public class Departamento : MonoBehaviour
 
     void Update()
     {
-        if (jugador1.Controla(this))
+        if (Dueno.getID() == 1)
         {
             SpriteJugador1();
         }
-        else
+        else if(Dueno.getID() == 2)
         {
             SpriteJugador2();
         }
@@ -147,15 +145,15 @@ public class Departamento : MonoBehaviour
     public void MostrarDatos()
     {
         Debug.Log("Departamento: " + Nombre);
-        Debug.Log("Due�o: " + (Dueno != null ? Dueno.Nombre : "Sin dueno"));
+        Debug.Log("Dueno: " + (Dueno != null ? Dueno.Nombre : "Sin dueno"));
         Debug.Log("Tropas: " + Tropas.Count);
-        Debug.Log("Infanter�a: " + Tropas.FindAll(t => t is Infanteria).Count);
-        Debug.Log("Artiller�a: " + Tropas.FindAll(t => t is Artilleria).Count);
-        Debug.Log("Caballer�a: " + Tropas.FindAll(t => t is Caballeria).Count);
-        Debug.Log("Oficinas: " +
-            (TieneOficinaInfanteria ? "Infanter�a " : "") +
-            (TieneOficinaArtilleria ? "Artiller�a " : "") +
-            (TieneOficinaCaballeria ? "Caballer�a " : ""));
+        Debug.Log("Infanteria: " + Tropas.FindAll(t => t is Infanteria).Count);
+        Debug.Log("Artilleria: " + Tropas.FindAll(t => t is Artilleria).Count);
+        Debug.Log("Caballeria: " + Tropas.FindAll(t => t is Caballeria).Count);
+        Debug.Log("Edificios: " +
+            (TieneOficinaReclutamiento ? "Infanteria " : "") +
+            (TieneFabrica ? "Fabrica " : "") +
+            (TieneEstablo ? "Establo " : ""));
     }
 
     public void ConstruirOficina(string tipo)
@@ -164,13 +162,13 @@ public class Departamento : MonoBehaviour
         switch (tipo.ToLower())
         {
             case "infanteria":
-                TieneOficinaInfanteria = true;
+                TieneOficinaReclutamiento = true;
                 break;
             case "artilleria":
-                TieneOficinaArtilleria = true;
+                TieneFabrica = true;
                 break;
             case "caballeria":
-                TieneOficinaCaballeria = true;
+                TieneEstablo = true;
                 break;
         }
 
@@ -182,15 +180,15 @@ public class Departamento : MonoBehaviour
         switch (tipo.ToLower())
         {
             case "infanteria":
-                if (TieneOficinaInfanteria)
+                if (TieneOficinaReclutamiento)
                     Tropas.Add(new Infanteria(Dueno));
                 break;
             case "artilleria":
-                if (TieneOficinaArtilleria)
+                if (TieneFabrica)
                     Tropas.Add(new Artilleria(Dueno));
                 break;
             case "caballeria":
-                if (TieneOficinaCaballeria)
+                if (TieneEstablo)
                     Tropas.Add(new Caballeria(Dueno));
                 break;
         }
