@@ -7,6 +7,19 @@ public class Jugador:MonoBehaviour
     public int ID;
     public List<Departamento> Departamentos { get; private set; }
 
+    public Ejercito Ejercito { get; private set; }
+
+    // Referencia al sistema que maneja los recursos de este jugador
+    public RecursosJugador Recursos;
+    public Jugador jugador;
+
+    private void Start()
+    {
+        if (jugador == null)
+        {
+            jugador = GetComponent<Jugador>();
+        }
+    }
     public Jugador(string nombre, int iD)
     {
         Nombre = nombre;
@@ -38,5 +51,10 @@ public class Jugador:MonoBehaviour
     public bool Controla(Departamento dpto)
     {
         return Departamentos.Contains(dpto);
+    }
+
+    private void Awake()
+    {
+        Ejercito = new Ejercito(this); // Inicializa el ejército del jugador
     }
 }

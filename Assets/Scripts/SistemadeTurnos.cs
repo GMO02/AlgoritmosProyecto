@@ -31,7 +31,16 @@ public class SistemaDeTurnos : MonoBehaviour
     public void SiguienteTurno()
     {
         turnoActual = (turnoActual + 1) % jugadores.Count;
+        Jugador jugadorActual = jugadores[turnoActual];
         Debug.Log("Turno de: " + jugadores[turnoActual].Nombre);
+
+        // Procesar producción en todos los departamentos del jugador actual
+        foreach (var dpto in jugadorActual.Departamentos)
+        {
+            dpto.ProcesarProduccionPorTurno(jugadorActual.Recursos);
+            dpto.ProcesarConstruccionesPorTurno();  // Nueva llamada para construcción de edificios
+        }
+
     }
 
     public Jugador ObtenerJugadorActual()

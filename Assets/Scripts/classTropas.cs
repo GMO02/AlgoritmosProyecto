@@ -5,14 +5,18 @@ public abstract class Tropa
     public int Defensa { get; protected set; }
     public Jugador Dueño { get; private set; }
 
+    public int TurnosRestantes { get; set; }  // Turnos para producción (nuevo)
+
     public Tropa(Jugador dueño)
     {
         Dueño = dueño;
+        TurnosRestantes = ObtenerTurnosProduccion();
     }
 
     public void SetVida(int i) {
         Vida = i;
     }
+    public abstract int ObtenerTurnosProduccion(); // Nuevo método abstracto para turnos de producción
     public abstract string Tipo { get; }  // Para identificar el tipo en la UI
 }
 public class Infanteria : Tropa
@@ -25,6 +29,10 @@ public class Infanteria : Tropa
     }
 
     public override string Tipo => "Infantería";
+    public override int ObtenerTurnosProduccion()
+    {
+        return 0;  // Infantería se produce automáticamente, sin espera
+    }
 }
 public class Artilleria : Tropa
 {
@@ -36,6 +44,7 @@ public class Artilleria : Tropa
     }
 
     public override string Tipo => "Artillería";
+    public override int ObtenerTurnosProduccion() => 4;  // 4 turnos para Artillería
 }
 public class Caballeria : Tropa
 {
@@ -47,6 +56,7 @@ public class Caballeria : Tropa
     }
 
     public override string Tipo => "Caballería";
+    public override int ObtenerTurnosProduccion() => 2;  // 2 turnos para Caballería
 }
 
 

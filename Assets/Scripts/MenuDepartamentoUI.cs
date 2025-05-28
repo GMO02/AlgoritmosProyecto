@@ -22,6 +22,7 @@ public class MenuDepartamentoUI : MonoBehaviour
     public GameObject menuConstruccion;
     public GameObject menuProduccion;
 
+    private Departamento departamentoActual;
 
     void Start()
     {
@@ -52,27 +53,22 @@ public class MenuDepartamentoUI : MonoBehaviour
     {
         nombreDepartamentoText.text = depto.Nombre;
 
+        int produccionRecurso = CalcularProduccionRecurso(depto);
+        int produccionDinero = CalcularProduccionDinero(depto);
+
         dineroCantidadText.text = ObtenerDineroProduccion(depto).ToString();
         produccionCantidadText.text = ObtenerProduccion(depto).ToString();
 
-        // Primero ocultamos todas las imágenes de construcciones
-        foreach (var img in imagenesConstrucciones)
-        {
-            img.gameObject.SetActive(false);
-        }
+        // Mostrar construcciones activas
+        MostrarConstrucciones(depto);
 
-        // Obtenemos las construcciones hechas en el departamento (debes implementar este método en Departamento)
-        /*
-        List<Construccion> construcciones = depto.ObtenerConstrucciones();
+        // Verificación de propiedad para botones
+        Jugador jugadorActual = FindObjectOfType<SistemaDeTurnos>().ObtenerJugadorActual();
+        bool esPropietario = depto.Dueno != null && depto.Dueno == jugadorActual;
 
-        // Activamos y asignamos sprite a las imágenes para cada construcción hecha, máximo 4
-        int count = Mathf.Min(construcciones.Count, imagenesConstrucciones.Count);
-        for (int i = 0; i < count; i++)
-        {
-            imagenesConstrucciones[i].sprite = construcciones[i].Sprite;
-            imagenesConstrucciones[i].gameObject.SetActive(true);
-        }
-        */
+        botonConstruccion.gameObject.SetActive(esPropietario);
+        botonProduccion.gameObject.SetActive(esPropietario);
+
         // Cerrar submenús
         menuConstruccion.SetActive(false);
         menuProduccion.SetActive(false);
@@ -83,12 +79,58 @@ public class MenuDepartamentoUI : MonoBehaviour
 
     private int ObtenerDineroProduccion(Departamento depto)
     {
-        return 100;
+        return 1000;
     }
 
     private int ObtenerProduccion(Departamento depto)
     {
-        return 50;
+        return 500;
     }
+
+    private Sprite ObtenerSpriteConstruccion(TipoEdificio tipo)
+    {
+        switch (tipo)
+        {
+            case TipoEdificio.Cuartel:
+                return Resources.Load<Sprite>("Sprites/Cuartel"); // Ajusta la ruta según tus assets
+            case TipoEdificio.Establo:
+                return Resources.Load<Sprite>("Sprites/Establo");
+            case TipoEdificio.Fabrica:
+                return Resources.Load<Sprite>("Sprites/Fabrica");
+            case TipoEdificio.Fortaleza:
+                return Resources.Load<Sprite>("Sprites/Fortaleza");
+            default:
+                return null;
+        }
+    }
+
+    private int CalcularProduccionRecurso(Departamento depto)
+    {
+        int baseProduccion = 500;
+        if (depto.TieneFabrica) baseProduccion += 500;
+        if (depto.TieneEstablo) baseProduccion += 200;
+        return baseProduccion;
+    }
+
+    private int CalcularProduccionDinero(Departamento depto)
+    {
+        return 1000; // Fijo como en lógica de Departamento
+    }
+
+    private void MostrarConstrucciones(Departamento depto)
+    {
+        foreach (var img in imagenesConstrucciones)
+            img.gameObject.SetActive(false);
+
+        int i = 0;
+        foreach (var edificio in depto.Edificios)
+        {
+            if (i >= imagenesConstrucciones.Count) break;
+            imagenesConstrucciones[i].sprite = ObtenerSpriteConstruccion(edificio.Tipo);
+            imagenesConstrucciones[i].gameObject.SetActive(true);
+            i++;
+        }
+    }
+
 }
 

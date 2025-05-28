@@ -1163,14 +1163,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b405ce93d2fad244ab8730da9f809beb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Nombre: 
+  Nombre: Cauca
   spriteRenderer: {fileID: 214975505}
-  Adyacentes: []
+  Adyacentes:
+  - {fileID: 419285554}
+  - {fileID: 301325008}
+  - {fileID: 1637368568}
+  - {fileID: 1515325438}
+  - {fileID: 1450709983}
   Dueno: {fileID: 0}
   clickSound: {fileID: 8300000, guid: 5d318a6ca4e19b14391d1ec70f9af557, type: 3}
   TieneOficinaReclutamiento: 0
   TieneFabrica: 0
   TieneEstablo: 0
+  menuUI: {fileID: 2002903327}
 --- !u!1 &229656774
 GameObject:
   m_ObjectHideFlags: 0
@@ -1840,14 +1846,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b405ce93d2fad244ab8730da9f809beb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Nombre: 
+  Nombre: Ecuador
   spriteRenderer: {fileID: 301325006}
-  Adyacentes: []
+  Adyacentes:
+  - {fileID: 419285554}
+  - {fileID: 1541057303}
+  - {fileID: 214975507}
   Dueno: {fileID: 0}
   clickSound: {fileID: 8300000, guid: 5d318a6ca4e19b14391d1ec70f9af557, type: 3}
   TieneOficinaReclutamiento: 0
   TieneFabrica: 0
   TieneEstablo: 0
+  menuUI: {fileID: 2002903327}
 --- !u!1 &353884861
 GameObject:
   m_ObjectHideFlags: 0
@@ -2552,14 +2562,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b405ce93d2fad244ab8730da9f809beb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Nombre: 
+  Nombre: Asuay
   spriteRenderer: {fileID: 419285551}
-  Adyacentes: []
+  Adyacentes:
+  - {fileID: 1541057303}
+  - {fileID: 301325008}
+  - {fileID: 214975507}
   Dueno: {fileID: 0}
   clickSound: {fileID: 8300000, guid: 5d318a6ca4e19b14391d1ec70f9af557, type: 3}
   TieneOficinaReclutamiento: 0
   TieneFabrica: 0
   TieneEstablo: 0
+  menuUI: {fileID: 2002903327}
 --- !u!1 &438171231
 GameObject:
   m_ObjectHideFlags: 0
@@ -3662,14 +3676,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b405ce93d2fad244ab8730da9f809beb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Nombre: 
+  Nombre: Zulia
   spriteRenderer: {fileID: 525117521}
-  Adyacentes: []
+  Adyacentes:
+  - {fileID: 539411824}
+  - {fileID: 1530854244}
+  - {fileID: 1297012724}
+  - {fileID: 1679027738}
   Dueno: {fileID: 0}
   clickSound: {fileID: 8300000, guid: 5d318a6ca4e19b14391d1ec70f9af557, type: 3}
   TieneOficinaReclutamiento: 0
   TieneFabrica: 0
   TieneEstablo: 0
+  menuUI: {fileID: 2002903327}
 --- !u!1 &536429563
 GameObject:
   m_ObjectHideFlags: 0
@@ -4196,14 +4215,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b405ce93d2fad244ab8730da9f809beb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Nombre: 
+  Nombre: Venezuela
   spriteRenderer: {fileID: 539411822}
-  Adyacentes: []
+  Adyacentes:
+  - {fileID: 1515325438}
+  - {fileID: 1530854244}
+  - {fileID: 525117523}
   Dueno: {fileID: 0}
   clickSound: {fileID: 8300000, guid: 5d318a6ca4e19b14391d1ec70f9af557, type: 3}
   TieneOficinaReclutamiento: 0
   TieneFabrica: 0
   TieneEstablo: 0
+  menuUI: {fileID: 2002903327}
 --- !u!1 &571031670
 GameObject:
   m_ObjectHideFlags: 0
@@ -8773,14 +8796,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b405ce93d2fad244ab8730da9f809beb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Nombre: 
+  Nombre: "Boyac\xE1"
   spriteRenderer: {fileID: 1297012722}
-  Adyacentes: []
+  Adyacentes:
+  - {fileID: 1679027738}
+  - {fileID: 1637368568}
+  - {fileID: 1530854244}
+  - {fileID: 525117523}
   Dueno: {fileID: 0}
   clickSound: {fileID: 8300000, guid: 5d318a6ca4e19b14391d1ec70f9af557, type: 3}
   TieneOficinaReclutamiento: 0
   TieneFabrica: 0
   TieneEstablo: 0
+  menuUI: {fileID: 2002903327}
 --- !u!1001 &1297136028
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9415,14 +9443,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b405ce93d2fad244ab8730da9f809beb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Nombre: 
+  Nombre: "Panam\xE1"
   spriteRenderer: {fileID: 1450709981}
-  Adyacentes: []
+  Adyacentes:
+  - {fileID: 214975507}
   Dueno: {fileID: 0}
   clickSound: {fileID: 8300000, guid: 5d318a6ca4e19b14391d1ec70f9af557, type: 3}
   TieneOficinaReclutamiento: 0
   TieneFabrica: 0
   TieneEstablo: 0
+  menuUI: {fileID: 2002903327}
 --- !u!1 &1455653673
 GameObject:
   m_ObjectHideFlags: 0
@@ -10165,14 +10195,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b405ce93d2fad244ab8730da9f809beb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Nombre: 
+  Nombre: Orinoco
   spriteRenderer: {fileID: 1515325436}
-  Adyacentes: []
+  Adyacentes:
+  - {fileID: 539411824}
+  - {fileID: 1530854244}
+  - {fileID: 1637368568}
+  - {fileID: 214975507}
   Dueno: {fileID: 0}
   clickSound: {fileID: 8300000, guid: 5d318a6ca4e19b14391d1ec70f9af557, type: 3}
   TieneOficinaReclutamiento: 0
   TieneFabrica: 0
   TieneEstablo: 0
+  menuUI: {fileID: 2002903327}
 --- !u!1001 &1530854239
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10397,14 +10432,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b405ce93d2fad244ab8730da9f809beb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Nombre: 
+  Nombre: Apure
   spriteRenderer: {fileID: 1530854242}
-  Adyacentes: []
+  Adyacentes:
+  - {fileID: 1515325438}
+  - {fileID: 539411824}
+  - {fileID: 525117523}
+  - {fileID: 1297012724}
+  - {fileID: 1637368568}
   Dueno: {fileID: 0}
   clickSound: {fileID: 8300000, guid: 5d318a6ca4e19b14391d1ec70f9af557, type: 3}
   TieneOficinaReclutamiento: 0
   TieneFabrica: 0
   TieneEstablo: 0
+  menuUI: {fileID: 2002903327}
 --- !u!1001 &1540042944
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10681,14 +10722,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b405ce93d2fad244ab8730da9f809beb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Nombre: 
+  Nombre: Guayaquil
   spriteRenderer: {fileID: 1541057301}
-  Adyacentes: []
+  Adyacentes:
+  - {fileID: 419285554}
+  - {fileID: 301325008}
   Dueno: {fileID: 0}
   clickSound: {fileID: 8300000, guid: 5d318a6ca4e19b14391d1ec70f9af557, type: 3}
   TieneOficinaReclutamiento: 0
   TieneFabrica: 0
   TieneEstablo: 0
+  menuUI: {fileID: 2002903327}
 --- !u!1 &1562777873
 GameObject:
   m_ObjectHideFlags: 0
@@ -11557,14 +11601,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b405ce93d2fad244ab8730da9f809beb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Nombre: 
+  Nombre: Cundinamarca
   spriteRenderer: {fileID: 1637368566}
-  Adyacentes: []
+  Adyacentes:
+  - {fileID: 214975507}
+  - {fileID: 1515325438}
+  - {fileID: 1297012724}
+  - {fileID: 1530854244}
+  - {fileID: 1679027738}
   Dueno: {fileID: 0}
   clickSound: {fileID: 8300000, guid: 5d318a6ca4e19b14391d1ec70f9af557, type: 3}
   TieneOficinaReclutamiento: 0
   TieneFabrica: 0
   TieneEstablo: 0
+  menuUI: {fileID: 2002903327}
 --- !u!1 &1658622481
 GameObject:
   m_ObjectHideFlags: 0
@@ -12166,14 +12216,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b405ce93d2fad244ab8730da9f809beb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Nombre: 
+  Nombre: Magdalena
   spriteRenderer: {fileID: 1679027736}
-  Adyacentes: []
+  Adyacentes:
+  - {fileID: 525117523}
+  - {fileID: 1297012724}
+  - {fileID: 1637368568}
   Dueno: {fileID: 0}
   clickSound: {fileID: 8300000, guid: 5d318a6ca4e19b14391d1ec70f9af557, type: 3}
   TieneOficinaReclutamiento: 0
   TieneFabrica: 0
   TieneEstablo: 0
+  menuUI: {fileID: 2002903327}
 --- !u!1 &1680687461
 GameObject:
   m_ObjectHideFlags: 0

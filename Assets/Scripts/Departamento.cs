@@ -17,39 +17,23 @@ public class Departamento : MonoBehaviour
     public AudioClip clickSound;
     private AudioSource audioSource;
 
-    private static Departamento departamentoSeleccionado = null;   
+    private static Departamento departamentoSeleccionado = null;
 
     // Edificios
     public bool TieneOficinaReclutamiento = false;
     public bool TieneFabrica = false;
     public bool TieneEstablo = false;
+    public bool TieneFortaleza = false;
 
-    // === PROPIEDADES Y FUNCIONES PARA EDIFICIOS ===
-    public int ReclutasPendientes { get; set; } = 0;
-    public float ModificadorCostoCaballeria { get; set; } = 1f;
-    public int EquipamientoProducido { get; set; } = 0;
+    public MenuDepartamentoUI menuUI;  // Arrastrar desde el inspector
 
-    public void AnadirReclutasPendientes(int cantidad)
-    {
-        ReclutasPendientes += cantidad;
-    }
+    public List<Tropa> ProduccionEnCurso = new List<Tropa>();
+    public List<Edificios> ConstruccionesEnCurso = new List<Edificios>();
 
-    public void EstablecerModificadorCostoCaballeria(float modificador)
-    {
-        ModificadorCostoCaballeria = modificador;
-    }
+    public enum TipoRecurso { Carbon, Comida, Dinero, Hierro, Madera }
 
-    public void AnadirEquipamientoProducido(int cantidad)
-    {
-        EquipamientoProducido += cantidad;
-    }
+    public TipoRecurso RecursoProducido;  // Asignar en Inspector o en código
 
-    public void ReiniciarValoresEdificio()
-    {
-        ReclutasPendientes = 0;
-        ModificadorCostoCaballeria = 1f;
-        EquipamientoProducido = 0;
-    }
 
     private Color originalColor;
     private Color seleccionadoColor = new Color(0.643f, 0.631f, 0.565f);
@@ -90,7 +74,7 @@ public class Departamento : MonoBehaviour
                 audioSource.PlayOneShot(clickSound);
             }
 
-            MostrarDatos();
+            menuUI.MostrarDepartamento(this); // MOSTRAR EL MENÚ
         }
         else
         {
@@ -126,7 +110,7 @@ public class Departamento : MonoBehaviour
         {
             SpriteJugador1();
         }
-        else if(Dueno.getID() == 2)
+        else if (Dueno.getID() == 2)
         {
             SpriteJugador2();
         }
@@ -175,35 +159,39 @@ public class Departamento : MonoBehaviour
         Debug.Log($"Oficina de {tipo} construida en {Nombre}");
     }
 
-    public void ReclutarTropa(string tipo)
+    public void ReclutarTropa(string tipo, int cantidad = 1)
     {
-        switch (tipo.ToLower())
+        for (int i = 0; i < cantidad; i++)
         {
-            case "infanteria":
-                if (TieneOficinaReclutamiento)
-                    Tropas.Add(new Infanteria(Dueno));
-                break;
-            case "artilleria":
-                if (TieneFabrica)
-                    Tropas.Add(new Artilleria(Dueno));
-                break;
-            case "caballeria":
-                if (TieneEstablo)
-                    Tropas.Add(new Caballeria(Dueno));
-                break;
+            switch (tipo.ToLower())
+            {
+                case "infanteria":
+                    if (TieneOficinaReclutamiento)
+                        Tropas.Add(new Infanteria(Dueno));
+                    break;
+                case "artilleria":
+                    if (TieneFabrica)
+                        Tropas.Add(new Artilleria(Dueno));
+                    break;
+                case "caballeria":
+                    if (TieneEstablo)
+                        Tropas.Add(new Caballeria(Dueno));
+                    break;
+            }
         }
     }
+
 
     public void Conquistar(Jugador nuevoDueno)
     {
         if (Dueno != null)
         {
             Dueno.RemoverDepartamento(this);
-        }
 
-        AsignarPropietario(nuevoDueno);
-        Tropas.Clear();
-        Debug.Log($"{Nombre} fue conquistado por {nuevoDueno.Nombre}");
+            AsignarPropietario(nuevoDueno);
+            Tropas.Clear();
+            Debug.Log($"{Nombre} fue conquistado por {nuevoDueno.Nombre}");
+        }
     }
 
 
@@ -225,4 +213,157 @@ public class Departamento : MonoBehaviour
         Dueno = null;
         antiguoPropietario.RemoverDepartamento(this);
     }
+
+    public void ProcesarProduccionPorTurno(RecursosJugador recursosJugador)
+    {
+        int dineroProducido = 1000;  // Base fija (puede hacerse variable)
+        int recursoProducido = 500;  // Base fija de producción del recurso asignado
+
+        // Ajustes según edificios construidos
+        foreach (var edificio in Edificios)
+        {
+            switch (edificio.Tipo)
+            {
+                case TipoEdificio.Cuartel:
+                    // Ejemplo: +1 tropa infantería por turno
+                    ReclutarTropa("infanteria", 1);
+                    break;
+                case TipoEdificio.Fabrica:
+                    recursoProducido += 500;
+                    break;
+                case TipoEdificio.Establo:
+                    recursoProducido += 200;
+                    break;
+                case TipoEdificio.Fortaleza:
+                    // El efecto de fortaleza se aplica en la lógica de combate, no aquí!!!
+                    break;
+            }
+        }
+
+        // Añadir dinero
+        recursosJugador.AñadirRecurso("dinero", dineroProducido);
+
+        // Añadir recurso producido según tipo
+        switch (RecursoProducido)
+        {
+            case TipoRecurso.Carbon:
+                recursosJugador.AñadirRecurso("carbon", recursoProducido);
+                break;
+            case TipoRecurso.Comida:
+                recursosJugador.AñadirRecurso("comida", recursoProducido);
+                break;
+            case TipoRecurso.Dinero:
+                recursosJugador.AñadirRecurso("dinero", recursoProducido);
+                break;
+            case TipoRecurso.Hierro:
+                recursosJugador.AñadirRecurso("hierro", recursoProducido);
+                break;
+            case TipoRecurso.Madera:
+                recursosJugador.AñadirRecurso("madera", recursoProducido);
+                break;
+        }
+
+        // Procesar tropas en producción
+        ProcesarTurnoProduccion();
+    }
+
+
+    public void ProcesarTurnoProduccion()
+    {
+        List<Tropa> produccionFinalizada = new List<Tropa>();
+
+        foreach (var tropa in ProduccionEnCurso)
+        {
+            tropa.TurnosRestantes--;  // Decrementa turnos para cada tropa en producción
+
+            if (tropa.TurnosRestantes <= 0)
+                produccionFinalizada.Add(tropa);  // Cuando terminen de construirse, pasarán a producidas
+        }
+
+        foreach (var tropa in produccionFinalizada)
+        {
+            ProduccionEnCurso.Remove(tropa);
+            Tropas.Add(tropa);  // Agrega la tropa terminada a tropas disponibles
+            Debug.Log($"Producción terminada: {tropa.Tipo} en {Nombre}");
+        }
+
+        // Actualizar visualmente el mapa con tropas listas (método que debes implementar)
+        //MostrarTropasVisuales();
+    }
+
+    public void AgregarProduccion(Tropa tropa)
+    {
+        ProduccionEnCurso.Add(tropa);
+    }
+
+    public bool TieneEdificio(TipoEdificio tipo)
+    {
+        foreach (var edificio in Edificios)
+        {
+            if (edificio.Tipo == tipo)
+                return true;
+        }
+        return false;
+    }
+
+    public void IniciarConstruccion(Edificios edificio)
+    {
+        ConstruccionesEnCurso.Add(edificio);
+    }
+
+    public void ProcesarConstruccionesPorTurno()
+    {
+        List<Edificios> construccionesFinalizadas = new List<Edificios>();
+
+        foreach (var edificio in ConstruccionesEnCurso)
+        {
+            edificio.Turnos--;  // Disminuye el contador de turnos
+
+            if (edificio.Turnos <= 0)
+            {
+                construccionesFinalizadas.Add(edificio);
+            }
+        }
+
+        foreach (var edificio in construccionesFinalizadas)
+        {
+            ConstruccionesEnCurso.Remove(edificio);
+            Edificios.Add(edificio);
+
+            // Actualiza los flags según el tipo de edificio construido
+            switch (edificio.Tipo)
+            {
+                case TipoEdificio.Cuartel:
+                    TieneOficinaReclutamiento = true;
+                    break;
+                case TipoEdificio.Establo:
+                    TieneEstablo = true;
+                    break;
+                case TipoEdificio.Fabrica:
+                    TieneFabrica = true;
+                    break;
+                case TipoEdificio.Fortaleza:
+                    TieneFortaleza = true;
+                    break;
+            }
+
+            Debug.Log($"Construcción terminada: {edificio.Tipo} en {Nombre}");
+        }
+    }
+
+    public void CambiarPropietario(Jugador nuevoDueno)
+    {
+        if (Dueno != null)
+        {
+            Dueno.Departamentos.Remove(this);
+            Dueno.Recursos.Departamentos.Remove(this);
+        }
+
+        Dueno = nuevoDueno;
+        nuevoDueno.Departamentos.Add(this);
+        nuevoDueno.Recursos.Departamentos.Add(this);
+
+        Debug.Log($"El departamento {Nombre} ahora pertenece a {nuevoDueno.Nombre}");
+    }
+
 }

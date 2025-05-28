@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
 
-public enum TipoEdificio { Ninguno, Cuartel, Establo, Fabrica }
+public enum TipoEdificio { Fortaleza, Cuartel, Establo, Fabrica }
 
 // ---------- Clase base ----------
 public abstract class Edificios

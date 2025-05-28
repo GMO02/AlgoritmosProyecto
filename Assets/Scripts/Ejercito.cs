@@ -26,72 +26,49 @@ public class Ejercito
         Tropas.Remove(tropa);
     }
 
-    // Método que simula una pelea entre dos ejércitos
-    public void Pelea(Ejercito enemigo)
+    public static void ResolverBatalla(Ejercito atacante, Ejercito defensor, Departamento departamentoDefendido)
     {
-        while (Tropas.Count > 0 && enemigo.Tropas.Count > 0)
+        int ataqueTotal = atacante.Tropas.Sum(t => t.Ataque);
+        int defensaTotal = defensor.Tropas.Sum(t => t.Defensa);
+
+        int vidaAtacanteTotal = atacante.Tropas.Sum(t => t.Vida);
+        int vidaDefensorTotal = defensor.Tropas.Sum(t => t.Vida);
+
+        int vidaRestanteDefensor = vidaDefensorTotal - ataqueTotal;
+        int vidaRestanteAtacante = vidaAtacanteTotal - defensaTotal;
+
+        vidaRestanteDefensor = Mathf.Max(vidaRestanteDefensor, 0);
+        vidaRestanteAtacante = Mathf.Max(vidaRestanteAtacante, 0);
+
+        if (vidaRestanteAtacante > vidaRestanteDefensor)
         {
-            // Calcular el ataque total y la defensa total de cada ejército
-            int ataqueTotal = CalcularAtaqueTotal();
-            int defensaTotal = CalcularDefensaTotal();
+            // Gana el atacante
+            Debug.Log("¡El atacante ha ganado la batalla!");
+            defensor.Tropas.Clear(); // Todas las tropas defensoras mueren
 
-            int ataqueEnemigoTotal = enemigo.CalcularAtaqueTotal();
-            int defensaEnemigoTotal = enemigo.CalcularDefensaTotal();
+            departamentoDefendido.CambiarPropietario(atacante.Dueño);
 
-            // Aplicar el daño entre ambos ejércitos
-            Atacar(ataqueTotal, defensaEnemigoTotal, enemigo);
-            Atacar(ataqueEnemigoTotal, defensaTotal, this);
+            // Eliminar un edificio al azar
+            if (departamentoDefendido.Edificios.Count > 0)
+            {
+                int indice = Random.Range(0, departamentoDefendido.Edificios.Count);
+                departamentoDefendido.Edificios.RemoveAt(indice);
+            }
 
-            // Eliminar las tropas que hayan muerto (vida <= 0)
-            EliminarTropasMuertas();
-            enemigo.EliminarTropasMuertas();
+            // Las tropas sobrevivientes del atacante quedan tal cual
         }
-
-        // Determinar el ganador
-        if (Tropas.Count > 0)
+        else if (vidaRestanteDefensor > vidaRestanteAtacante)
         {
-            Debug.Log("¡Nuestro ejército ha ganado!");
-        }
-        else if (enemigo.Tropas.Count > 0)
-        {
-            Debug.Log("¡El ejército enemigo ha ganado!");
+            // Gana el defensor
+            Debug.Log("¡El defensor ha repelido el ataque!");
+            atacante.Tropas.Clear(); // Todas las tropas atacantes mueren
         }
         else
         {
+            // Empate: todos pierden sus tropas
             Debug.Log("¡La batalla terminó en empate!");
+            atacante.Tropas.Clear();
+            defensor.Tropas.Clear();
         }
-    }
-
-    // Calcular el ataque total del ejército
-    private int CalcularAtaqueTotal()
-    {
-        return Tropas.Sum(tropa => tropa.Ataque);
-    }
-
-    // Calcular la defensa total del ejército
-    private int CalcularDefensaTotal()
-    {
-        return Tropas.Sum(tropa => tropa.Defensa);
-    }
-
-    // Aplicar daño basado en el ataque total y la defensa total
-    private void Atacar(int ataqueTotal, int defensaTotal, Ejercito enemigo)
-    {
-        // El daño total se calcula como la diferencia entre el ataque total y la defensa total
-        int dañoTotal = Mathf.Max(ataqueTotal - defensaTotal, 0);  // Asegurarse de que el daño no sea negativo
-
-        // Aplicar daño uniformemente a las tropas del ejército enemigo
-        foreach (var tropa in enemigo.Tropas)
-        {
-            // Distribuir el daño de manera uniforme entre las tropas enemigas
-            int dañoPorTropa = dañoTotal / enemigo.Tropas.Count;
-            tropa.SetVida(tropa.Vida - dañoPorTropa);
-        }
-    }
-
-    // Eliminar las tropas que hayan muerto (vida <= 0)
-    private void EliminarTropasMuertas()
-    {
-        Tropas.RemoveAll(tropa => tropa.Vida <= 0);
     }
 }
