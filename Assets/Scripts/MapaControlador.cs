@@ -8,7 +8,7 @@ public class MapaControlador : MonoBehaviour
     private Dictionary<string, Departamento> departamentos;
 
     // Diccionario para almacenar los sprites de los departamentos
-    public Sprite[] spritesDepartamentos;  // Aquí asignarás los sprites en el Inspector
+    public Sprite[] spritesDepartamentos;
 
     // Conexiones entre departamentos (usando el nombre como clave)
     private Dictionary<string, List<string>> conexiones;
@@ -58,10 +58,10 @@ public class MapaControlador : MonoBehaviour
                 // Obtener el componente Departamento del GameObject
                 Departamento depto = deptoObj.GetComponent<Departamento>();
 
-                // Asignar el sprite correspondiente al departamento (si ya tienes sprites en el Inspector)
+                // Asignar el sprite correspondiente al departamento
                 if (depto != null && depto.spriteRenderer == null)
                 {
-                    depto.spriteRenderer = deptoObj.GetComponent<SpriteRenderer>();  // Asegurarse de que el SpriteRenderer esté asignado
+                    depto.spriteRenderer = deptoObj.GetComponent<SpriteRenderer>();  // Asegurarse de que el SpriteRenderer estÃ© asignado
                     depto.spriteRenderer.sprite = ObtenerSpritePorNombre(nombre); // Asignar el sprite
                 }
 
@@ -77,7 +77,7 @@ public class MapaControlador : MonoBehaviour
 
     Sprite ObtenerSpritePorNombre(string nombre)
     {
-        // Asignar un sprite según el nombre del departamento
+        // Asignar un sprite segÃºn el nombre del departamento
         switch (nombre)
         {
             case "asuay (1)":
@@ -111,7 +111,6 @@ public class MapaControlador : MonoBehaviour
 
     void EstablecerConexiones()
     {
-        // Ejemplo de cómo conectar los departamentos (esto lo puedes hacer de manera dinámica con datos)
         conexiones.Add("asuay (1)", new List<string> { "guayaquil (1)", "ecuador (1)", "cauca (1)" });
         conexiones.Add("guayaquil (1)", new List<string> { "asuay (1)", "ecuador (1)" });
         conexiones.Add("ecuador (1)", new List<string> { "guayaquil (1)", "asuay (1)", "cauca (1)" });
