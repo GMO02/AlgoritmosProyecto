@@ -1,84 +1,95 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
+using UnityEngine.SceneManagement;
 
-public class SeleccionPaisController : MonoBehaviour
+public class PlayerSelectionManager : MonoBehaviour
 {
-    public TMP_Dropdown dropdownJugador1;
-    public TMP_Dropdown dropdownJugador2;
+    public Button[] botonesJugador1;
+    public Button[] botonesJugador2;
     public Button botonConfirmar;
 
-    private List<string> opcionesOriginales = new List<string> { "Nueva Granada", "Ecuador", "Venezuela" };
+    private string paisJugador1 = "";
+    private string paisJugador2 = "";
+
+    // Lista de países en el mismo orden que los botones
+    private string[] nombresPaises = { "Nueva Granada", "Ecuador", "Venezuela" };
 
     void Start()
     {
-        // Carga las opciones en los dropdowns
-        dropdownJugador1.ClearOptions();
-        dropdownJugador1.AddOptions(opcionesOriginales);
-
-        dropdownJugador2.ClearOptions();
-        dropdownJugador2.AddOptions(opcionesOriginales);
-
-        // Cuando cambia la selección de jugador 1, actualiza opciones de jugador 2
-        dropdownJugador1.onValueChanged.AddListener(OnJugador1Cambio);
-
-        // Controla el botón Confirmar: solo habilítalo si países son diferentes
         botonConfirmar.interactable = false;
-        dropdownJugador1.onValueChanged.AddListener(delegate { ValidarConfirmar(); });
-        dropdownJugador2.onValueChanged.AddListener(delegate { ValidarConfirmar(); });
+
+        for (int i = 0; i < botonesJugador1.Length; i++)
+        {
+            string paisLocal = nombresPaises[i];
+
+            // Asignar listeners de selección
+            botonesJugador1[i].onClick.AddListener(() => SeleccionarPaisJugador1(paisLocal));
+            botonesJugador2[i].onClick.AddListener(() => SeleccionarPaisJugador2(paisLocal));
+
+            // Desactivar botones del Jugador 2 inicialmente
+            botonesJugador2[i].interactable = false;
+        }
+
+        botonConfirmar.onClick.AddListener(() => IrAEscenaJuego());
     }
 
-    void OnJugador1Cambio(int index)
+    public void SeleccionarPaisJugador1(string pais)
     {
-        string paisSeleccionado = opcionesOriginales[index];
+        paisJugador1 = pais;
+        Debug.Log("Jugador 1 selecciono: " + paisJugador1);
 
-        // Prepara opciones para jugador 2 sin el país que escogió jugador 1
-        List<string> opcionesJugador2 = new List<string>(opcionesOriginales);
-        opcionesJugador2.Remove(paisSeleccionado);
+        // Desactivar todos los botones del Jugador 1
+        foreach (Button boton in botonesJugador1)
+            boton.interactable = false;
 
-        // Guarda selección previa de jugador 2 (si existe)
-        string seleccionActualJugador2 = dropdownJugador2.options[dropdownJugador2.value].text;
+        // Activar botones del Jugador 2 excepto el país elegido por el Jugador 1
+        for (int i = 0; i < botonesJugador2.Length; i++)
+        {
+            if (nombresPaises[i] == paisJugador1)
+            {
+                botonesJugador2[i].interactable = false;
+                ColorBlock cb = botonesJugador2[i].colors;
+                cb.normalColor = new Color(1, 1, 1, 0.3f); // Hacerlo más opaco visualmente
+                botonesJugador2[i].colors = cb;
+            }
+            else
+            {
+                botonesJugador2[i].interactable = true;
+            }
+        }
+    }
 
-        // Actualiza las opciones de jugador 2
-        dropdownJugador2.ClearOptions();
-        dropdownJugador2.AddOptions(opcionesJugador2);
+    public void SeleccionarPaisJugador2(string pais)
+    {
+        paisJugador2 = pais;
+        Debug.Log("Jugador 2 seleccionó: " + paisJugador2);
 
-        // Si la selección previa sigue válida, mantenla, si no selecciona la primera opción
-        int nuevoIndex = opcionesJugador2.IndexOf(seleccionActualJugador2);
-        if (nuevoIndex >= 0)
-            dropdownJugador2.value = nuevoIndex;
+        // Desactivar todos los botones del Jugador 2
+        foreach (Button boton in botonesJugador2)
+            boton.interactable = false;
+
+        VerificarConfirmacion();
+    }
+
+    private void VerificarConfirmacion()
+    {
+        if (!string.IsNullOrEmpty(paisJugador1) && !string.IsNullOrEmpty(paisJugador2))
+        {
+            botonConfirmar.interactable = true;
+            Debug.Log("Ambos países seleccionados, botón Confirmar activado.");
+        }
         else
-            dropdownJugador2.value = 0;
-
-        dropdownJugador2.RefreshShownValue();
-
-        ValidarConfirmar();
+        {
+            botonConfirmar.interactable = false;
+        }
     }
 
-    void ValidarConfirmar()
+    public void IrAEscenaJuego()
     {
-        // Habilita el botón Confirmar solo si las selecciones son diferentes
-        botonConfirmar.interactable = dropdownJugador1.value != dropdownJugador2.value;
-    }
-
-    public void ConfirmarSeleccion()
-    {
-        var seleccion = ObtenerPaisesSeleccionados();
-        Debug.Log("Jugador 1 eligió: " + seleccion.Item1);
-        Debug.Log("Jugador 2 eligió: " + seleccion.Item2);
-
-        // Aquí continúa la lógica para empezar el juego con esos países.
-        // Por ejemplo: ocultar el panel y activar el mapa, cargar datos, etc.
-    }
-
-
-    public (string, string) ObtenerPaisesSeleccionados()
-    {
-        string pais1 = opcionesOriginales[dropdownJugador1.value];
-        List<string> opcionesJugador2 = new List<string>(opcionesOriginales);
-        opcionesJugador2.Remove(pais1);
-        string pais2 = opcionesJugador2[dropdownJugador2.value];
-        return (pais1, pais2);
-    }
+        PlayerPrefs.SetString("PaisJugador1", paisJugador1);
+        PlayerPrefs.SetString("PaisJugador2", paisJugador2);
+        Debug.Log("Cambiando a escena con: " + paisJugador1 + " y " + paisJugador2);
+        SceneManager.LoadScene("SampleScene"); // Cambia esto si tu escena tiene otro nombre
+    }
 }
