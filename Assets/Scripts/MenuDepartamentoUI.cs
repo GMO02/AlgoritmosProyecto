@@ -29,6 +29,9 @@ public class MenuDepartamentoUI : MonoBehaviour
     public TextMeshProUGUI textoCaballeria;
     public TextMeshProUGUI textoArtilleria;
 
+    public Button botonAtacar;
+    public Button botonMover;
+
 
     void Start()
     {
@@ -72,12 +75,8 @@ public class MenuDepartamentoUI : MonoBehaviour
         // Mostrar construcciones activas
         MostrarConstrucciones(depto);
 
-        // Verificación de propiedad para botones
-        Jugador jugadorActual = FindObjectOfType<SistemaDeTurnos>().ObtenerJugadorActual();
-        bool esPropietario = depto.Dueno != null && depto.Dueno == jugadorActual;
-
-        botonConstruccion.gameObject.SetActive(esPropietario);
-        botonProduccion.gameObject.SetActive(esPropietario);
+        botonConstruccion.gameObject.SetActive(true);
+        botonProduccion.gameObject.SetActive(true);
 
         // Cerrar submenús
         menuConstruccion.SetActive(false);
@@ -88,10 +87,57 @@ public class MenuDepartamentoUI : MonoBehaviour
         textoCaballeria.text = $"Caballería: {conteos.caballeria}";
         textoArtilleria.text = $"Artillería: {conteos.artilleria}";
 
+        MostrarBotonSegunDepartamento(depto);
+
+
         depto.ActualizarImagenTropa();
 
     }
 
+    public void MostrarBotonSegunDepartamento(Departamento depto)
+    {
+        // Por defecto ocultar ambos
+        botonAtacar.gameObject.SetActive(false);
+        botonMover.gameObject.SetActive(false);
+
+        // Según el nombre del departamento, mostrar un botón específico
+        switch (depto.Nombre)
+        {
+            case "Cauca":
+                botonMover.gameObject.SetActive(true);
+                break;
+            case "Cundinamarca":
+                botonMover.gameObject.SetActive(true);
+                break;
+            case "Boyacá":
+                botonMover.gameObject.SetActive(true);
+                break;
+            case "Magdalena":
+                botonMover.gameObject.SetActive(true);
+                break;
+            case "Panamá":
+                botonMover.gameObject.SetActive(true);
+                break;
+            case "Apure":
+                botonAtacar.gameObject.SetActive(true);
+                break;
+            case "Zulia":
+                botonAtacar.gameObject.SetActive(true);
+                break;
+            case "Orinoco":
+                botonAtacar.gameObject.SetActive(true);
+                break;
+            case "Ecuador":
+                botonAtacar.gameObject.SetActive(true);
+                break;
+            case "Asuay":
+                botonAtacar.gameObject.SetActive(true);
+                break;
+            default:
+                // Ningún botón visible
+                break;
+        }
+    }
     private int ObtenerDineroProduccion(Departamento depto)
     {
         return 1000;

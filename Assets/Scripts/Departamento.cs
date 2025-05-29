@@ -40,8 +40,21 @@ public class Departamento : MonoBehaviour
 
     private Color originalColor;
     private Color seleccionadoColor = new Color(0.643f, 0.631f, 0.565f);
-    private Color jugador1Color = new Color(0.720f, 0.827f, 0.702f); // Color #B8D3B3 (RGB Normalizado)
-    private Color jugador2Color = new Color(0.720f, 0.325f, 0.376f); // Color #B85360 (RGB Normalizado)
+    private Color colorCauca = new Color(0.659f, 0.976f, 1.0f);
+    private Color colorCundinamarca = new Color(0.659f, 0.976f, 1.0f);
+    private Color colorBoyaca = new Color(0.659f, 0.976f, 1.0f);
+    private Color colorMagdalena = new Color(0.659f, 0.976f, 1.0f);
+    private Color colorPanama = new Color(0.659f, 0.976f, 1.0f);
+    private Color colorGuayaquil = new Color(0.659f, 0.976f, 1.0f);
+
+    private Color colorVenezuela = new Color(1.0f, 0.816f, 0.800f);
+    private Color colorZulia = new Color(1.0f, 0.816f, 0.800f);
+    private Color colorOrinoco = new Color(1.0f, 0.816f, 0.800f);
+    private Color colorApure = new Color(1.0f, 0.816f, 0.800f);
+    private Color colorAsuay = new Color(1.0f, 0.816f, 0.800f);
+    private Color colorEcuador = new Color(1.0f, 0.816f, 0.800f);
+
+
 
     void Start()
     {
@@ -61,12 +74,69 @@ public class Departamento : MonoBehaviour
             menuUI = FindObjectOfType<MenuDepartamentoUI>();
         }
 
+        SetNombreYColor(Nombre);
+
         originalColor = spriteRenderer.color;
 
         Ejer = new Ejercito(Dueno); // Inicializar la lista de tropas
     }
 
-    void OnMouseDown()
+    // Método para asignar nombre y color
+    public void SetNombreYColor(string nombre)
+    {
+        Nombre = nombre;
+        AsignarColorPorNombre(nombre);
+    }
+
+    public void AsignarColorPorNombre(string nombre)
+    {
+        if (spriteRenderer == null)
+        {
+            spriteRenderer = GetComponent<SpriteRenderer>();
+        }
+
+        switch (nombre)
+        {
+            case "Cauca":
+                spriteRenderer.color = colorCauca;
+                break;
+            case "Cundinamarca":
+                spriteRenderer.color = colorCundinamarca;
+                break;
+            case "Boyacá":
+                spriteRenderer.color = colorBoyaca;
+                break;
+            case "Magdalena":
+                spriteRenderer.color = colorMagdalena;
+                break;
+            case "Panamá":
+                spriteRenderer.color = colorPanama;
+                break;
+            case "Guayaquil":
+                spriteRenderer.color = colorGuayaquil;
+                break;
+            case "Venezuela":
+                spriteRenderer.color = colorVenezuela;
+                break;
+            case "Zulia":
+                spriteRenderer.color = colorZulia;
+                break;
+            case "Orinoco":
+                spriteRenderer.color = colorOrinoco;
+                break;
+            case "Apure":
+                spriteRenderer.color = colorApure;
+                break;
+            case "Asuay":
+                spriteRenderer.color = colorAsuay;
+                break;
+            case "Ecuador":
+                spriteRenderer.color = colorEcuador;
+                break;
+        }
+    }
+
+        void OnMouseDown()
     {
         if (departamentoSeleccionado != null && departamentoSeleccionado != this)
         {
@@ -105,26 +175,9 @@ public class Departamento : MonoBehaviour
         }
     }
 
-    void SpriteJugador1()
-    {
-        spriteRenderer.color = jugador1Color;
-    }
-
-    void SpriteJugador2()
-    {
-        spriteRenderer.color = jugador2Color;
-    }
-
     void Update()
     {
-        if (Dueno.getID() == 1)
-        {
-            SpriteJugador1();
-        }
-        else if (Dueno.getID() == 2)
-        {
-            SpriteJugador2();
-        }
+        //ActualizarSprite();
 
         if (Input.GetMouseButtonDown(0))
         {
@@ -228,8 +281,14 @@ public class Departamento : MonoBehaviour
 
     public void AsignarPropietario(Jugador nuevoPropietario)
     {
+        if (nuevoPropietario == null)
+        {
+            Debug.LogError("AsignarPropietario: nuevoPropietario es null");
+            return;
+        }
         Dueno = nuevoPropietario;
         nuevoPropietario.AnadirDepartamento(this);
+        //ActualizarSprite();
     }
     public void RemoverPropietario(Jugador antiguoPropietario)
     {

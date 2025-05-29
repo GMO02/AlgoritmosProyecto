@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,6 +8,10 @@ public class SistemaDeTurnos : MonoBehaviour
     private int turnoActual = 0;  // Índice del jugador que tiene el turno
 
     private MapaControlador mapaControlador;
+
+    // Tiempo en segundos entre cada turno automático
+    public float tiempoEntreTurnos = 40f;
+
 
     void Start()
     {
@@ -48,17 +53,13 @@ public class SistemaDeTurnos : MonoBehaviour
         return jugadores[turnoActual];
     }
 
-    // Ejemplo opcional: Asignar departamentos aleatoriamente (si no se han asignado aún)
-    public void AsignarDepartamentosIniciales()
+    IEnumerator CicloTurnosAutomatico()
     {
-        Dictionary<string, Departamento> todos = mapaControlador.ObtenerDepartamentos(); // Usar la instancia de mapaControlador
-        int i = 0;
-        foreach (var depto in todos.Values)
+        while (true) // Bucle infinito
         {
-            Jugador jugadorAsignado = jugadores[i % jugadores.Count];
-            jugadorAsignado.AnadirDepartamento(depto);
-            depto.AsignarPropietario(jugadorAsignado); // Este método debe existir en tu clase Departamento
-            i++;
+            yield return new WaitForSeconds(tiempoEntreTurnos);
+            SiguienteTurno();
         }
     }
+    
 }
