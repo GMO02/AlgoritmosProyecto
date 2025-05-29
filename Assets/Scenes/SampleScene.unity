@@ -1299,7 +1299,7 @@ MonoBehaviour:
   TieneEstablo: 0
   TieneFortaleza: 0
   menuUI: {fileID: 2002903327}
-  RecursoProducido: 0
+  RecursoProducido: 1
 --- !u!1 &229656774
 GameObject:
   m_ObjectHideFlags: 0
@@ -1982,7 +1982,7 @@ MonoBehaviour:
   TieneEstablo: 0
   TieneFortaleza: 0
   menuUI: {fileID: 2002903327}
-  RecursoProducido: 0
+  RecursoProducido: 3
 --- !u!1 &353884861
 GameObject:
   m_ObjectHideFlags: 0
@@ -2717,7 +2717,7 @@ MonoBehaviour:
   TieneEstablo: 0
   TieneFortaleza: 0
   menuUI: {fileID: 2002903327}
-  RecursoProducido: 0
+  RecursoProducido: 4
 --- !u!1 &438171231
 GameObject:
   m_ObjectHideFlags: 0
@@ -3834,7 +3834,7 @@ MonoBehaviour:
   TieneEstablo: 0
   TieneFortaleza: 0
   menuUI: {fileID: 2002903327}
-  RecursoProducido: 0
+  RecursoProducido: 1
 --- !u!1 &536429563
 GameObject:
   m_ObjectHideFlags: 0
@@ -8958,7 +8958,7 @@ MonoBehaviour:
   TieneEstablo: 0
   TieneFortaleza: 0
   menuUI: {fileID: 2002903327}
-  RecursoProducido: 0
+  RecursoProducido: 4
 --- !u!1001 &1297136028
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10380,7 +10380,7 @@ MonoBehaviour:
   TieneEstablo: 0
   TieneFortaleza: 0
   menuUI: {fileID: 2002903327}
-  RecursoProducido: 0
+  RecursoProducido: 4
 --- !u!1001 &1530854239
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10620,7 +10620,7 @@ MonoBehaviour:
   TieneEstablo: 0
   TieneFortaleza: 0
   menuUI: {fileID: 2002903327}
-  RecursoProducido: 0
+  RecursoProducido: 3
 --- !u!1001 &1540042944
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10909,7 +10909,7 @@ MonoBehaviour:
   TieneEstablo: 0
   TieneFortaleza: 0
   menuUI: {fileID: 2002903327}
-  RecursoProducido: 0
+  RecursoProducido: 1
 --- !u!1 &1562777873
 GameObject:
   m_ObjectHideFlags: 0
@@ -11793,7 +11793,7 @@ MonoBehaviour:
   TieneEstablo: 0
   TieneFortaleza: 0
   menuUI: {fileID: 2002903327}
-  RecursoProducido: 0
+  RecursoProducido: 3
 --- !u!1 &1658622481
 GameObject:
   m_ObjectHideFlags: 0

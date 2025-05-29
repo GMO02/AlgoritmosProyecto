@@ -10,7 +10,7 @@ public class Departamento : MonoBehaviour
     public List<Departamento> Adyacentes;
 
     public List<Edificios> Edificios = new List<Edificios>();
-    public List<Tropa> Tropas = new List<Tropa>();
+    public Ejercito Ejer;
 
     public Jugador Dueno;
 
@@ -60,7 +60,7 @@ public class Departamento : MonoBehaviour
 
         originalColor = spriteRenderer.color;
 
-        Tropas = new List<Tropa>(); // Inicializar la lista de tropas
+        Ejer = new Ejercito(Dueno); // Inicializar la lista de tropas
     }
 
     void OnMouseDown()
@@ -138,10 +138,10 @@ public class Departamento : MonoBehaviour
     {
         Debug.Log("Departamento: " + Nombre);
         Debug.Log("Dueno: " + (Dueno != null ? Dueno.Nombre : "Sin dueno"));
-        Debug.Log("Tropas: " + Tropas.Count);
-        Debug.Log("Infanteria: " + Tropas.FindAll(t => t is Infanteria).Count);
-        Debug.Log("Artilleria: " + Tropas.FindAll(t => t is Artilleria).Count);
-        Debug.Log("Caballeria: " + Tropas.FindAll(t => t is Caballeria).Count);
+        Debug.Log("Tropas: " + Ejer.Tropas.Count);
+        Debug.Log("Infanteria: " + Ejer.Tropas.FindAll(t => t is Infanteria).Count);
+        Debug.Log("Artilleria: " + Ejer.Tropas.FindAll(t => t is Artilleria).Count);
+        Debug.Log("Caballeria: " + Ejer.Tropas.FindAll(t => t is Caballeria).Count);
         Debug.Log("Edificios: " +
             (TieneOficinaReclutamiento ? "Infanteria " : "") +
             (TieneFabrica ? "Fabrica " : "") +
@@ -175,15 +175,15 @@ public class Departamento : MonoBehaviour
             {
                 case "infanteria":
                     if (TieneOficinaReclutamiento)
-                        Tropas.Add(new Infanteria(Dueno));
+                        Ejer.AnadirTropa(new Infanteria(Dueno));
                     break;
                 case "artilleria":
                     if (TieneFabrica)
-                        Tropas.Add(new Artilleria(Dueno));
+                        Ejer.AnadirTropa(new Artilleria(Dueno));
                     break;
                 case "caballeria":
                     if (TieneEstablo)
-                        Tropas.Add(new Caballeria(Dueno));
+                        Ejer.AnadirTropa(new Caballeria(Dueno));
                     break;
             }
         }
@@ -197,7 +197,7 @@ public class Departamento : MonoBehaviour
             Dueno.RemoverDepartamento(this);
 
             AsignarPropietario(nuevoDueno);
-            Tropas.Clear();
+            Ejer.Tropas.Clear();
             Debug.Log($"{Nombre} fue conquistado por {nuevoDueno.Nombre}");
         }
     }
@@ -291,7 +291,7 @@ public class Departamento : MonoBehaviour
         foreach (var tropa in produccionFinalizada)
         {
             ProduccionEnCurso.Remove(tropa);
-            Tropas.Add(tropa);  // Agrega la tropa terminada a tropas disponibles
+            Ejer.AnadirTropa(tropa);  // Agrega la tropa terminada a tropas disponibles
             Debug.Log($"Producción terminada: {tropa.Tipo} en {Nombre}");
         }
 
