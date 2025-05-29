@@ -1,0 +1,419 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern} % Tipografía moderna
+\usepackage{newunicodechar}
+\usepackage{geometry}
+\geometry{margin=1in}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{setspace}
+\usepackage{titlesec}
+\usepackage{listings}
+\usepackage{ragged2e}
+\usepackage{color}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage{tcolorbox}
+\usepackage{hyperref}
+\usepackage{tikz}
+
+% Estilo de portada
+\newtcolorbox{portadabox}[2][]{colback=white!5!gray, colframe=black,
+title=#2, fonttitle=\bfseries, #1}
+
+% Configuración de encabezados
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{Proyecto Algoritmos: Juego}
+\fancyhead[R]{2024}
+\fancyfoot[C]{\thepage}
+
+% Configuración de estilo de código
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    commentstyle=\color{green!50!black},
+    stringstyle=\color{red},
+    numberstyle=\tiny\color{gray},
+    numbers=left,
+    stepnumber=1,
+    numbersep=8pt,
+    backgroundcolor=\color{white},
+    frame=single,
+    breaklines=true,
+    breakatwhitespace=true,
+    captionpos=b,
+    showspaces=false,
+    showstringspaces=false,
+    tabsize=4
+}
+
+% Estilo de títulos
+\titleformat{\section}{\normalfont\Large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalfont\large\bfseries}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\normalfont\normalsize\bfseries}{\thesubsubsection}{1em}{}
+
+% Divisores decorativos
+\newcommand{\divider}{
+    \begin{center}
+        \tikz{\draw[thick, color=gray] (0,0) -- (15,0);}
+    \end{center}
+}
+
+% Configuración de hipervínculos
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,
+    urlcolor=cyan,
+    pdftitle={Calculadora de Nómina},
+    pdfpagemode=FullScreen,
+}
+
+\begin{document}
+
+% Portada
+\begin{titlepage}
+    \begin{center}
+        \vspace*{1cm}
+        
+        % Borde decorativo
+        \begin{portadabox}[width=\textwidth]{}
+            \begin{center}
+                \includegraphics[width=0.3\textwidth]{Logo_URosario (2).png} % Logo de la universidad
+                \vspace{1cm}
+                
+                \Huge\textbf{Proyecto Algoritmos}\\[1cm]
+                \Large\textbf{La gran Colombia}\\[2cm]
+                \Large\textbf{Documentación}\\[2cm]
+                \Large\textbf{2025}\\[2cm]
+            \end{center}
+        \end{portadabox}
+    \end{center}
+\end{titlepage}
+
+% Roles de los integrantes
+\section*{Roles de los Integrantes}
+\begin{itemize}
+    \item \textbf{Santiago Diaz}: Gerente.
+    \item \textbf{Gabriela Morales}: Diseño de juego y Algoritmos. 
+    \item \textbf{Danna Gonzales}: Desarrollador de backend y estructura de datos. 
+    \item \textbf{Valentina Mesa}: Doumentación y pruebas. 
+\end{itemize}
+
+\divider
+
+\tableofcontents
+\newpage
+
+% Introducción
+\section{Introducción}
+
+\textbf{“La Gran Colombia”} es un prototipo académico de juego de estrategia por turnos 1 vs 1, inspirado en Risk y Supremacy 1914, ambientado en el mapa histórico de la Gran Colombia (Colombia, Venezuela, Ecuador y Panamá, 1821-1831). El tablero inicial está compuesto por 12 provincias interconectadas, suficiente para mostrar mecánicas de conquista sin sobrecargar al jugador. En cada ronda, los jugadores rivales planifican movimientos y ataques; luego todas las acciones se resuelven simultáneamente antes de pasar al siguiente turno.
+
+\begin{description}
+    \item[Metas del prototipo v0.1] 
+\end{description}
+\begin{enumerate}
+    \item \textbf{Mapa jugable} con las 12 provincias clicables y resaltado al pasar el cursor.
+    \item \textbf{Sistema básico de tropas y recursos} dinero y unidades de infantería.
+    \item \textbf{Condición de victoria clara} controlar  8 de las 12 provincias.
+    \item \textbf{Interfaz minima} panel de información de provincia, botones “Mover” y “Atacar”, contador de turnos.
+\end{enumerate}
+% Requisitos
+\section{Requisitos}
+\begin{justify}
+    Para ejecutar este proyecto localmente se necesita: 
+\end{justify}
+\begin{itemize}
+    \item \textbf {Sistema operativo:} Windows 10/11, macOS 10.13+ o Linux (Ubuntu 18.04+)
+    \item \textbf{Unity} (versión recomendada: 2021.3 LTS o superior)
+    \item \textbf{Procesador:} Intel Core i3 o equivalente. 
+    \item \textbf{Memoria RAM}: 4 GB mínimo. 
+    \item \textbf{Espacio en disco}: 1 GB libre. 
+    \item \textbf{Tarjeta gráfica}: Compatible con OpenGL 3.2 o superior. 
+    \item \textbf{Paquete TextMeshPro} (se instala automáticamente al abrir el proyecto en Unity si falta). 
+\end{itemize}
+\subsection{Instalación}
+\begin{enumerate}
+    \item \textbf{Clona o descarga el repositorio:}
+    \begin{lstlisting}[language=bash]
+        git clone https://github.com/usuario/AlgoritmosProyecto.git
+    \end{lstlisting}
+    \item \textbf{Abre el proyecto en Unity:}
+    \begin{itemize}
+        \item Abre Unity Hub.
+        \item Haz clic en "Add" y selecciona la carpeta del proyecto descargado.
+    \end{itemize}
+    \item \textbf{Instala dependencias si es necesario:}
+    \begin{itemize}
+        \item Al abrir el proyecto, Unity puede pedirte instalar TextMeshPro u otros paquetes. Acepta e instala.
+    \end{itemize}
+    \item \textbf{Ejecuta el juego}
+    \begin{itemize}
+        \item Selecciona la escena principal (por ejemplo, MenuInicial o la escena de inicio).
+        \item Haz clic en el botón \textbf{Play} en el editor de Unity para probar el juego localmente.
+    \end{itemize}
+\end{enumerate}
+\divider
+
+% Manual de Usuario
+\section{Manual de Usuario}
+
+\begin{description}
+    \item[Menú Principal]
+\end{description}
+\begin{itemize}
+        \item Al iniciar el juego, verás el menú principal con las opciones Jugar y Salir.
+        \item Pulsa Jugar para pasar a la selección de país.
+        \item Pulsa Salir para cerrar el juego.
+    \end{itemize}
+\begin{description}
+    \item[Selección de País]
+\end{description}
+ \begin{itemize}
+        \item Elige el país para cada jugador usando los menús desplegables.
+        \item No es posible seleccionar el mismo país para ambos jugadores.
+        \item Pulsa \textbf{Confirmar} para iniciar la partida con las selecciones realizadas.
+\end{itemize}
+\begin{description}
+    \item[Juego] 
+\end{description}
+\begin{itemize}
+    \item El mapa muestra las provincias disponibles. Cada jugador controla un conjunto de provincias iniciales.
+    \item El juego es por turnos. En cada turno, el jugador puede construir edificios, reclutar tropas y mover unidades.
+    \item Accede al menú de construcción seleccionando una provincia. 
+    \item Construye edificios si tienes recursos suficientes.
+    \item Recluta tropas en provincias con los edificios adecuados.
+    \item Ataca provincias adyacentes controladas por el enemigo.
+    \item El resultado de la batalla depende de las tropas y edificios defensivos.
+    \item El juego termina cuando un jugador controla todas las provincias o cumple condiciones de victoria específicas.
+\end{itemize}
+\divider
+
+\section{Guía Interna del Código}
+
+\subsection{Resumen de las funciones principales}
+\begin{itemize}
+    \item \textbf{Simulación de Batallas:} \colorbox{yellow!30}{\texttt{Ejercito.ResolverBatalla}} calcula el resultado de los combates entre ejércitos, considerando ataque, defensa y efectos de edificios.
+    \item \textbf {Administración de recursos:} \colorbox{yellow!30}{\texttt{RecursosJugador}}gestiona los recursos del jugador, verifica pagos y produce recursos por turno.
+    \item \textbf{Construcción y producción:} \colorbox{yellow!30}{\texttt{Departamento}} y \colorbox{yellow!30}{\texttt{Edificios}} gestionan la construcción de edificios y la producción de tropas y recursos.
+    \item \textbf{Gestión de turnos: }\colorbox{yellow!30}{\texttt{SistemaDeTurnos}}controla el flujo de turnos y la producción automática de recursos y construcciones.
+    \item \textbf{Menús y navegación:} Scripts como: 
+    \begin{lstlisting}[language=c, caption={Clase Menú inicial}]
+        using System.Collections;
+        using System.Collections.Generic;
+        using UnityEngine;
+        using UnityEngine.SceneManagement; 
+        public class MenuInicialScript : MonoBehaviour
+        {
+            public GameObject PanelMenuInicial;   // Panel con botones Jugar y Salir
+            public GameObject SeleccionPaisPanel;   // Panel de seleccion de pais
+        
+            void Start()
+            {
+                PanelMenuInicial.SetActive(true);     // Mostrar menu principal
+                SeleccionPaisPanel.SetActive(false);    // Ocultar seleccion pais
+            }
+        
+            public void Jugar()
+            {
+                PanelMenuInicial.SetActive(false);    // Oculta el menu principal
+                SeleccionPaisPanel.SetActive(true);
+            }
+        
+            public void Salir()
+            {
+                Debug.Log("Saliendo...");
+                Application.Quit();
+            }
+        
+        }
+    \end{lstlisting}
+
+    \begin{lstlisting}[language=c, caption={SeleccionPaisController}]
+    using System.Collections.Generic;
+    using UnityEngine;
+    using UnityEngine.UI;
+    using TMPro;
+        
+    public class SeleccionPaisController : MonoBehaviour
+    {
+        public TMP_Dropdown dropdownJugador1;
+        public TMP_Dropdown dropdownJugador2;
+        public Button botonConfirmar;
+        
+        private List<string> opcionesOriginales = new List<string> { "Nueva Granada", "Ecuador", "Venezuela" };
+        
+        void Start()
+        {
+            // Carga las opciones en los dropdowns
+            dropdownJugador1.ClearOptions();
+            dropdownJugador1.AddOptions(opcionesOriginales);
+        
+            dropdownJugador2.ClearOptions();
+            dropdownJugador2.AddOptions(opcionesOriginales);
+        
+            // Cuando cambia la seleccion de jugador 1, actualiza opciones de jugador 2
+            dropdownJugador1.onValueChanged.AddListener(OnJugador1Cambio);
+        
+            // Controla el boton Confirmar: solo habilitalo si paises son diferentes
+            botonConfirmar.interactable = false;
+            dropdownJugador1.onValueChanged.AddListener(delegate { ValidarConfirmar(); });
+            dropdownJugador2.onValueChanged.AddListener(delegate { ValidarConfirmar(); });
+            }
+        
+        void OnJugador1Cambio(int index)
+        {
+            string paisSeleccionado = opcionesOriginales[index];
+        
+            // Prepara opciones para jugador 2 sin el pais que escogio jugador 1
+            List<string> opcionesJugador2 = new List<string>(opcionesOriginales);
+            opcionesJugador2.Remove(paisSeleccionado);
+        
+            // Guarda seleccion previa de jugador 2 (si existe)
+            string seleccionActualJugador2 = dropdownJugador2.options[dropdownJugador2.value].text;
+        
+            // Actualiza las opciones de jugador 2
+            dropdownJugador2.ClearOptions();
+            dropdownJugador2.AddOptions(opcionesJugador2);
+        
+            // Si la seleccion previa sigue valida, mantenla, si no selecciona la primera opcion
+            int nuevoIndex = opcionesJugador2.IndexOf(seleccionActualJugador2);
+            if (nuevoIndex >= 0)
+                dropdownJugador2.value = nuevoIndex;
+            else
+                dropdownJugador2.value = 0;
+        
+            dropdownJugador2.RefreshShownValue();
+        
+            ValidarConfirmar();
+        }
+        
+        void ValidarConfirmar()
+        {
+            // Habilita el boton Confirmar solo si las selecciones son diferentes
+            botonConfirmar.interactable = dropdownJugador1.value != dropdownJugador2.value;
+        }
+        
+        public void ConfirmarSeleccion()
+         {
+                var seleccion = ObtenerPaisesSeleccionados();
+                Debug.Log("Jugador 1 eligio: " + seleccion.Item1);
+                Debug.Log("Jugador 2 eligio: " + seleccion.Item2);
+        
+                // Aqui continua la logica para empezar el juego con esos paises.
+                // Por ejemplo: ocultar el panel y activar el mapa, cargar datos, etc.
+            }
+        
+        
+            public (string, string) ObtenerPaisesSeleccionados()
+            {
+                string pais1 = opcionesOriginales[dropdownJugador1.value];
+                List<string> opcionesJugador2 = new List<string>(opcionesOriginales);
+                opcionesJugador2.Remove(pais1);
+                string pais2 = opcionesJugador2[dropdownJugador2.value];
+                return (pais1, pais2);
+            }
+        }
+        
+    \end{lstlisting}
+
+        \begin{lstlisting}[language=c, caption={BotonJugarySalir}]
+        using System.Collections;
+        using System.Collections.Generic;
+        using UnityEngine;
+        
+        public class BotonJugarySalir : MonoBehaviour
+        {
+            // Start is called before the first frame update
+            void Start()
+            {
+                
+            }
+        
+            // Update is called once per frame
+            void Update()
+            {
+                
+            }
+        }
+    \end{lstlisting}
+\end{itemize}
+
+\subsection{Estructura del código}
+\begin{description}
+    \item[Assets/scripts] 
+\end{description}
+\begin{itemize}
+    \item \colorbox{green!30}{\texttt{RecursosJugador.cs}} Lógica de recursos del jugador.
+    \item \colorbox{green!30}{\texttt{classJugador.cs}} Representa a cada jugador.
+    \item \colorbox{green!30}{\texttt{Departamento.cs}} Provincias del mapa.
+    \item \colorbox{green!30}{\texttt{Edificios.cs}} Tipos de edificios y sus efectos.
+    \item \colorbox{green!30}{\texttt{classTropas.cs}} Definición de tropas.
+    \item \colorbox{green!30}{\texttt{Ejercito.cs}} Gestión de ejércitos y batallas.
+    \item \colorbox{green!30}{\texttt{SistemaDeTurnos.cs}} Control de turnos.
+    \item \colorbox{green!30}{\texttt{MapaControlador.cs}} Inicialización y conexiones del mapa.
+    \item \colorbox{green!30}{\texttt{MenuDepartamentoUI.cs, MenuConstruccionUI.cs}}Interfaces de usuario para provincias y construcción.
+    \item \colorbox{green!30}{\texttt{MenuInicialScript.cs}}Controla el menú principal y la transición a la selección de país.
+    \item \colorbox{green!30}{\texttt{SeleccionPaisController.cs}} Lógica para la selección de países por los jugadores.
+\end{itemize}
+
+\subsection{Tecnologías utilizadas}
+\begin{itemize}
+    \item \textbf{Unity Engine}: Motor principal del juego.
+    \item \textbf{C}: Lenguaje de programación.
+    \item \textbf{TextMeshPro}: Para la interfaz gráfica.
+    \item \textbf{Sprites y Audio}: Para la representación visual y sonora.
+\end{itemize}
+
+\subsection{Componentes clave}
+\begin{itemize}
+    \item \textbf{RecursosJugador}: Controla los recursos (dinero, comida, hierro, etc.), pagos y producción.
+    \item \textbf{Departamento}: Nodo del grafo, representa una provincia. Gestiona edificios, tropas y producción.
+    \item \textbf{Edificios}: Clases para cada tipo de edificio (Cuartel, Establo, Fábrica, Fortaleza), con sus efectos y costos.
+    \item \textbf{Tropa y Ejercito}: Definen las unidades militares y su agrupación para batallas.
+    \item \textbf{SistemaDeTurnos}: Controla el flujo de juego, alternando entre jugadores y procesando producción/construcción.
+    \item \textbf{MapaControlador}: Inicializa el grafo de provincias y sus conexiones.
+    \item \textbf{UI (MenuDepartamentoUI, MenuConstruccionUI)}: Interfaz para mostrar información y permitir acciones al usuario.
+    \item \textbf{Menús principales}: 
+        \begin{itemize}
+            \item \textbf{MenuInicialScript}: Muestra el menú principal y gestiona la transición a la selección de país.
+            \item \textbf{SeleccionPaisController}: Permite a los jugadores elegir sus países y valida la selección.
+            \item \textbf{BotonJugarySalir, ScriptJugar}: Scripts para botones de navegación y acciones básicas.
+        \end{itemize}
+\end{itemize}
+
+
+\subsection{Interacciones Entre Módulos}
+
+\begin{itemize}
+    \item \textbf{Jugador} contiene un RecursosJugador y un Ejercito
+    \item \textbf{Departamento} referencia a su Dueño (Jugador) y contiene listas de Edificios y Tropas.
+    \item \textbf{SistemaDeTurnos} itera sobre los jugadores y sus departamentos para procesar producción y construcciones.
+    \item \textbf{UI} interactúa con los scripts de lógica para mostrar información y ejecutar acciones (construir, reclutar, atacar).
+    \item \textbf{Menús} gestionan el flujo inicial del juego y la configuración de la partida.
+\end{itemize}
+% Comparación de Avances
+\section{Comparación de Avances Semanales}
+
+\begin{itemize}
+    \item \textbf{Semana 1 - Investigación:} Se definieron las mecánicas básicas del sistema de combate. Se analizaron juegos de estrategia como referencia.
+    
+    \item \textbf{Semana 2 - Planeación:} Inició la creación del documento de diseño del videojuego. Se definieron los objetivos generales del proyecto y su estructura inicial. \textbf{Problema:} Se está tardando más de lo esperado en consolidar toda la información en el documento.
+
+    \item \textbf{Semana 3 - Diseño del mapa:} Se completó el boceto del mapa con divisiones políticas por departamentos. El diseño se basó en referentes históricos y geográficos.
+
+    \item \textbf{Semana 4 - Backend:} Se desarrollaron clases clave para el funcionamiento del juego (provincias, jugadores, recursos). Se inició la conexión con una base de datos local para gestionar información persistente. \textbf{Problema:} Algunas clases aún no están completamente integradas entre sí.
+
+    \item \textbf{Semana 5 - Pantalla principal:} Se completó la pantalla inicial del juego con navegación básica. La estética visual fue alineada con la temática histórica del juego.
+
+    \item \textbf{Semana 6 - Menús e implementación de turnos:} Se crearon menús interactivos para cada provincia. Se implementó el sistema de turnos como base del flujo del juego.
+
+    \item \textbf{Semana 7 - Sistema de combate y recursos:} Se ajustaron las reglas de combate para facilitar la jugabilidad. Se finalizó el menú principal con diseño funcional. Se añadió la lógica para asignar recursos a cada departamento.
+\end{itemize}
+
+\end{document}
+
