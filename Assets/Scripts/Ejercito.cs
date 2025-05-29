@@ -32,7 +32,11 @@ public class Ejercito
 
     public static void ResolverBatalla(Ejercito atacante, Ejercito defensor, Departamento departamentoDefendido)
     {
-        int ataqueTotal = atacante.Tropas.Sum(t => t.Ataque);
+        float modif =1f;
+        if (departamentoDefendido.TieneFortaleza) {
+            modif = 0.8f;
+        }
+        int ataqueTotal = Mathf.RoundToInt(atacante.Tropas.Sum(t => t.Ataque)*modif);
         int defensaTotal = defensor.Tropas.Sum(t => t.Defensa);
 
         int vidaAtacanteTotal = atacante.Tropas.Sum(t => t.Vida);
