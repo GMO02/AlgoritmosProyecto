@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Unity.VectorGraphics;
+
 
 public class Departamento : MonoBehaviour
 {
@@ -34,6 +36,7 @@ public class Departamento : MonoBehaviour
 
     public TipoRecurso RecursoProducido;  // Asignar en Inspector o en código
 
+    public SpriteRenderer imagenTropa; // Imagen de tropas en el mapa
 
     private Color originalColor;
     private Color seleccionadoColor = new Color(0.643f, 0.631f, 0.565f);
@@ -187,6 +190,18 @@ public class Departamento : MonoBehaviour
                     break;
             }
         }
+        ActualizarImagenTropa();
+
+        //Recuenta tropas por tipo (esto lo defines en Ejercito)
+        Ejer.ObtenerConteoTropas();
+
+        MenuDepartamentoUI ui = FindObjectOfType<MenuDepartamentoUI>();
+        
+        if (ui != null && ui.gameObject.activeSelf)
+        {
+            ui.MostrarDepartamento(this); // Refresca conteos
+        }
+            
     }
 
 
@@ -372,6 +387,33 @@ public class Departamento : MonoBehaviour
         nuevoDueno.Recursos.Departamentos.Add(this);
 
         Debug.Log($"El departamento {Nombre} ahora pertenece a {nuevoDueno.Nombre}");
+    }
+
+    public void ActualizarImagenTropa()
+    {
+        if (imagenTropa == null) return;
+
+        string rutaSprite = "infanteria"; // Por defecto
+
+        // Prioridad: Artillería > Caballería > Infantería
+        if (Ejer.Tropas.Exists(t => t is Artilleria))
+        {
+            rutaSprite = "artilleria"; // Asegúrate que el nombre del archivo en Resources sea exactamente este
+        }
+        else if (Ejer.Tropas.Exists(t => t is Caballeria))
+        {
+            rutaSprite = "caballeria";
+        }
+
+        Sprite nuevoSprite = Resources.Load<Sprite>(rutaSprite);
+        if (nuevoSprite != null)
+        {
+            imagenTropa.sprite = nuevoSprite;
+        }
+        else
+        {
+            Debug.LogWarning("No se encontró el sprite: " + rutaSprite);
+        }
     }
 
 }

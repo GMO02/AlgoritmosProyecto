@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour
@@ -33,6 +34,9 @@ public class CameraController : MonoBehaviour
     private float currentAlpha = 0f;  // Opacidad actual
     public float animSpeed = 6f;      // Velocidad de la animación de aparición/desaparición
 
+    public List<SpriteRenderer> spritesRecursosYTropas;  // Lista de todos los SpriteRenderer de recursos y tropas
+    public float zoomParaAparecerSprites = 5f;           // Zoom en el que se muestran
+
 
     void Start()
     {
@@ -50,6 +54,16 @@ public class CameraController : MonoBehaviour
         
         nombreSpriteRenderer.color = new Color(nombreSpriteRenderer.color.r, nombreSpriteRenderer.color.g, nombreSpriteRenderer.color.b, currentAlpha2);
 
+        // Hacer invisibles los sprites de recursos y tropas al inicio
+        foreach (var sr in spritesRecursosYTropas)
+        {
+            if (sr != null)
+            {
+                Color color = sr.color;
+                color.a = 0f;
+                sr.color = color;
+            }
+        }
     }
 
     void Update()
@@ -66,6 +80,9 @@ public class CameraController : MonoBehaviour
 
         // Controlar la visibilidad de los nombres según el zoom
         ControlarAparicionNombre();
+
+        ControlarAparicionSpritesRecursosYTropas();
+
     }
 
     // Función para mover la cámara con el mouse al hacer clic y arrastrar
@@ -163,4 +180,20 @@ public class CameraController : MonoBehaviour
         Color color = nombreSpriteRenderer.color;
         nombreSpriteRenderer.color = new Color(color.r, color.g, color.b, currentAlpha2);
     }
+
+    void ControlarAparicionSpritesRecursosYTropas()
+    {
+        float objetivoAlpha = (Camera.main.orthographicSize <= zoomParaAparecerSprites) ? 1f : 0f;
+
+        foreach (var sr in spritesRecursosYTropas)
+        {
+            if (sr != null)
+            {
+                Color color = sr.color;
+                color.a = Mathf.Lerp(color.a, objetivoAlpha, Time.deltaTime * animSpeed);
+                sr.color = color;
+            }
+        }
+    }
+
 }

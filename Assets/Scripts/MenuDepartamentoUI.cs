@@ -25,6 +25,11 @@ public class MenuDepartamentoUI : MonoBehaviour
 
     private Departamento departamentoActual;
 
+    public TextMeshProUGUI textoInfanteria;
+    public TextMeshProUGUI textoCaballeria;
+    public TextMeshProUGUI textoArtilleria;
+
+
     void Start()
     {
         OcultarMenu();
@@ -77,6 +82,14 @@ public class MenuDepartamentoUI : MonoBehaviour
         // Cerrar submenús
         menuConstruccion.SetActive(false);
         menuProduccion.SetActive(false);
+
+        var conteos = depto.Ejer.ObtenerConteoTropas();
+        textoInfanteria.text = $"Infantería: {conteos.infanteria}";
+        textoCaballeria.text = $"Caballería: {conteos.caballeria}";
+        textoArtilleria.text = $"Artillería: {conteos.artilleria}";
+
+        depto.ActualizarImagenTropa();
+
     }
 
     private int ObtenerDineroProduccion(Departamento depto)
