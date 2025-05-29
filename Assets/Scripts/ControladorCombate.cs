@@ -7,16 +7,16 @@ public class ControladorCombate : MonoBehaviour
     public GameObject mensajeWin;
     public GameObject mensajeLoose;
 
-    public void IniciarCombate(Jugador atacante, Departamento deptoObjetivo)
+    public void IniciarCombate(Departamento atacante, Departamento deptoObjetivo)
     {
-        if (deptoObjetivo.Dueno == null || deptoObjetivo.Dueno == atacante)
+        if (deptoObjetivo.Dueno == atacante.Dueno)
         {
             Debug.LogWarning("No puedes atacar un territorio sin dueño o que ya es tuyo.");
             return;
         }
 
-        Ejercito ejercitoAtacante = atacante.Ejercito;
-        Ejercito ejercitoDefensor = deptoObjetivo.Dueno.Ejercito;
+        Ejercito ejercitoAtacante = atacante.Ejer;
+        Ejercito ejercitoDefensor = deptoObjetivo.Ejer;
 
         if (ejercitoAtacante.Tropas.Count == 0)
         {

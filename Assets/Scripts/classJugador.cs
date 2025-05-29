@@ -7,8 +7,6 @@ public class Jugador:MonoBehaviour
     public int ID;
     public List<Departamento> Departamentos { get; private set; }
 
-    public Ejercito Ejercito { get; private set; }
-
     // Referencia al sistema que maneja los recursos de este jugador
     public RecursosJugador Recursos;
     public Jugador jugador;
@@ -53,8 +51,4 @@ public class Jugador:MonoBehaviour
         return Departamentos.Contains(dpto);
     }
 
-    private void Awake()
-    {
-        Ejercito = new Ejercito(this); // Inicializa el ejército del jugador
-    }
 }

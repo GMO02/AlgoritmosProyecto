@@ -15,7 +15,7 @@ public class Ejercito
     }
 
     // Método para añadir una tropa al ejército
-    public void AñadirTropa(Tropa tropa)
+    public void AnadirTropa(Tropa tropa)
     {
         Tropas.Add(tropa);
     }
