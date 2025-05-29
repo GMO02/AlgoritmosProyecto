@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using static Departamento;
 
 public class MenuDepartamentoUI : MonoBehaviour
 {
@@ -26,6 +27,7 @@ public class MenuDepartamentoUI : MonoBehaviour
 
     void Start()
     {
+        OcultarMenu();
         menuConstruccion.SetActive(false);
         menuProduccion.SetActive(false);
 
@@ -52,12 +54,15 @@ public class MenuDepartamentoUI : MonoBehaviour
     public void MostrarDepartamento(Departamento depto)
     {
         nombreDepartamentoText.text = depto.Nombre;
+        // Mostrar el panel
+        gameObject.SetActive(true);
 
         int produccionRecurso = CalcularProduccionRecurso(depto);
         int produccionDinero = CalcularProduccionDinero(depto);
 
         dineroCantidadText.text = ObtenerDineroProduccion(depto).ToString();
         produccionCantidadText.text = ObtenerProduccion(depto).ToString();
+        produccionImage.sprite = ObtenerSpriteRecurso(depto.RecursoProducido);
 
         // Mostrar construcciones activas
         MostrarConstrucciones(depto);
@@ -72,9 +77,6 @@ public class MenuDepartamentoUI : MonoBehaviour
         // Cerrar submenús
         menuConstruccion.SetActive(false);
         menuProduccion.SetActive(false);
-
-        // Mostrar el panel
-        gameObject.SetActive(true);
     }
 
     private int ObtenerDineroProduccion(Departamento depto)
@@ -92,13 +94,13 @@ public class MenuDepartamentoUI : MonoBehaviour
         switch (tipo)
         {
             case TipoEdificio.Cuartel:
-                return Resources.Load<Sprite>("Sprites/Cuartel"); // Ajusta la ruta según tus assets
+                return Resources.Load<Sprite>("Assets/Recursos/OficinaImagen.png"); // Ajusta la ruta según tus assets
             case TipoEdificio.Establo:
-                return Resources.Load<Sprite>("Sprites/Establo");
+                return Resources.Load<Sprite>("Assets/Recursos/EstabloImagen.png");
             case TipoEdificio.Fabrica:
-                return Resources.Load<Sprite>("Sprites/Fabrica");
+                return Resources.Load<Sprite>("Assets/Recursos/FabricaImagen.png");
             case TipoEdificio.Fortaleza:
-                return Resources.Load<Sprite>("Sprites/Fortaleza");
+                return Resources.Load<Sprite>("Assets/Recursos/FortalezaImagen.png");
             default:
                 return null;
         }
@@ -130,6 +132,32 @@ public class MenuDepartamentoUI : MonoBehaviour
             imagenesConstrucciones[i].gameObject.SetActive(true);
             i++;
         }
+    }
+
+    private Sprite ObtenerSpriteRecurso(TipoRecurso recurso)
+    {
+        string ruta = "";
+
+        switch (recurso)
+        {
+            case TipoRecurso.Carbon:
+                ruta = "carbon_circulo";
+                break;
+            case TipoRecurso.Comida:
+                ruta = "maiz_circulo";
+                break;
+            case TipoRecurso.Dinero:
+                ruta = "moneda_circulo";
+                break;
+            case TipoRecurso.Hierro:
+                ruta = "hierro_circulo";
+                break;
+            case TipoRecurso.Madera:
+                ruta = "madera_circulo";
+                break;
+        }
+
+        return Resources.Load<Sprite>(ruta);
     }
 
 }

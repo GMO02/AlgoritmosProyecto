@@ -53,6 +53,11 @@ public class Departamento : MonoBehaviour
             audioSource = gameObject.AddComponent<AudioSource>();
         }
 
+        if (menuUI == null)
+        {
+            menuUI = FindObjectOfType<MenuDepartamentoUI>();
+        }
+
         originalColor = spriteRenderer.color;
 
         Tropas = new List<Tropa>(); // Inicializar la lista de tropas
@@ -73,8 +78,6 @@ public class Departamento : MonoBehaviour
             {
                 audioSource.PlayOneShot(clickSound);
             }
-
-            menuUI.MostrarDepartamento(this); // MOSTRAR EL MENÚ
         }
         else
         {
@@ -86,12 +89,17 @@ public class Departamento : MonoBehaviour
     {
         spriteRenderer.color = seleccionadoColor;
         departamentoSeleccionado = this;
+        menuUI.MostrarDepartamento(this); // MOSTRAR EL MENÚ
     }
 
     private void DesmarcarDepartamento()
     {
         spriteRenderer.color = originalColor;
         departamentoSeleccionado = null;
+        if (menuUI != null)
+        {
+            menuUI.OcultarMenu(); // Esta línea oculta el menú cuando se deselecciona
+        }
     }
 
     void SpriteJugador1()
