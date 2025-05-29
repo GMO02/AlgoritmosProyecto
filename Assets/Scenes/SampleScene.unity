@@ -9332,6 +9332,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5943ba1dfef377b4998e5e5910ffd631, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SiguienteTurno: {fileID: 1270058253}
   intervalo: 30
   duracionVisible: 3
 --- !u!212 &1270058253
